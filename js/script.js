@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Define assets to preload
     const assetsToLoad = [
-        'wwwroot/assets/greenscreen2floatTran.mov',
+        'wwwroot/assets/greenscreen2floatTran.mp4',
         'wwwroot/assets/Song.m4a',
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'wwwroot/videos/SW4.mp4',
         'wwwroot/videos/SW5.mp4',
         'wwwroot/videos/SW6.mp4',
-        'wwwroot/videos/greenscreen2floatTran.mov',
+        'wwwroot/videos/greenscreen2floatTran.mp4',
         // Add more assets as needed
     ];
 
