@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom WebGL Game</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Include your site.css file for styling -->
+    <link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+
+    <audio id="loadingMusic" src="wwwroot/assets/LoadingMusic.m4a"></audio>
+
+    <div id="loadingBarContainer">
+        <div id="loadingText">Loading...</div>
+        <img id="loadingBar" src="wwwroot/assets/CowboyHead.gif" alt="Loading Bar">
+    </div>
+
+    <div id="videoPlayerContainer"></div>
+
+    <!-- Include CreateJS and PreloadJS library scripts -->
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://code.createjs.com/1.0.0/preloadjs.min.js"></script>
+    <script src="https://code.createjs.com/1.0.0/soundjs.min.js"></script>
+
+    <!-- Include your script.js file for game logic -->
+    <script src="js/script.js"></script>
+
+    <script>
+        // Initialize PreloadJS
+        createjs.MD2Laser = createjs.MD2Laser || {};
+        createjs.MD2Laser.preload = new createjs.LoadQueue();
+        createjs.MD2Laser.preload.installPlugin(createjs.Sound);
+
+        // Define assets to preload
+        const assetsToLoad = [
+            { id: "loadingMusic", src: "wwwroot/assets/LoadingMusic.m4a" },
+            { id: "loadingBar", src: "wwwroot/assets/CowboyHead.gif" },
+            { id: "audio1", src: "wwwroot/assets/Song.m4a" },
+            { id: "video1", src: "wwwroot/videos/SW1.mp4" },
+            { id: "video2", src: "wwwroot/videos/SW2.mp4" },
+            { id: "video3", src: "wwwroot/videos/SW3.mp4" },
+            { id: "video4", src: "wwwroot/videos/SW4.mp4" },
+            { id: "video5", src: "wwwroot/videos/SW5.mp4" },
+            { id: "video6", src: "wwwroot/videos/SW6.mp4" },
+            // Add more assets as needed
+        ];
+
+        createjs.MD2Laser.preload.loadManifest(assetsToLoad);
+
+        // Event listener to run your game code once assets are loaded
+        createjs.MD2Laser.preload.on("complete", function () {
+            // Your game code that relies on preloaded assets
+            // This can be in your existing script.js file
+
+            // Change loading text to "Click" when the game starts
+            document.getElementById("loadingText").textContent = "Click";
+        });
+    </script>
+</body>
+</html>

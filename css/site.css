@@ -1,0 +1,86 @@
+/* Reset default browser styles */
+body, h1, h2, p, div, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Video container */
+#videoPlayerContainer {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio (height:width) for responsive scaling */
+    overflow: hidden;
+}
+
+/* Video player */
+video {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Adjust the object-fit property based on your preferences */
+}
+
+/* Additional styles for other elements if needed */
+body {
+    background-color: black;
+    margin-bottom: 60px;
+}
+
+@media (min-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+#loadingBar {
+    position: absolute;
+    top: 9%;
+    left: 10%;/* Add your styles for the loading bar here */
+}
+
+#loadingTextContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(-50%); /* Adjust the translation to center vertically based on the loading graphic's height */
+    z-index: 2; /* Ensure the text appears above the loading graphic */
+}
+
+/* Loading text styles */
+#loadingText {
+    font-family: 'futura', sans-serif; /* Replace 'Your Font Name' with the desired font */
+    font-weight: 600;
+    font-style: oblique;
+    color: #C8958A; /* Set the text color (hex, rgb, or color name) */
+    font-size: 60px; /* Set the font size */
+    position: absolute; /* Set the position to absolute */
+    top: 55%; /* Center vertically */
+    left: 58%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the text */
+    animation: fade 5s infinite; /* Use the fade animation with a duration of 5 seconds */
+    z-index: 3; /* Ensure the text appears above the loading graphic */
+}
+
+@keyframes fade {
+    0%, 100% {
+        opacity: 0; /* Start and end with transparency */
+    }
+    50% {
+        opacity: 1; /* Fully opaque in the middle of the animation */
+    }
+}
