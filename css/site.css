@@ -24,6 +24,16 @@ video {
     z-index: 1;
 }
 
+#transparentVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 999; /* Highest layer */
+}
+
 /* Additional styles for other elements if needed */
 body {
     background-color: white;
