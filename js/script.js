@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'wwwroot/videos/SW4.mp4',
         'wwwroot/videos/SW5.mp4',
         'wwwroot/videos/SW6.mp4',
-        'wwwroot/videos/greenscreen2floatTran.mp4',
         // Add more assets as needed
     ];
 
