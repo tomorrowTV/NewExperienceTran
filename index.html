@@ -58,27 +58,6 @@
 
             // Change loading text to "Click" when the game starts
             document.getElementById("loadingText").textContent = "Click";
-
-            // Function to set up the transparent video
-            function setupTransparentVideo() {
-                const transparentVideo = document.createElement('video');
-                transparentVideo.src = 'wwwroot/assets/trantest1.webm';
-                transparentVideo.preload = 'auto';
-                transparentVideo.setAttribute('playsinline', '');
-                transparentVideo.style.position = 'absolute';
-                transparentVideo.style.top = '0';
-                transparentVideo.style.left = '0';
-                transparentVideo.style.width = '100%';
-                transparentVideo.style.height = '100%';
-                transparentVideo.style.objectFit = 'cover'; // Adjust the object-fit property based on your preferences
-                transparentVideo.style.zIndex = '999'; // Ensure the transparent video appears above the other elements
-
-                // Append the transparent video to the video player container
-                document.getElementById('videoPlayerContainer').appendChild(transparentVideo);
-            }
-
-            // Call the function to set up the transparent video
-            setupTransparentVideo();
         });
     </script>
 </body>
