@@ -109,7 +109,6 @@ html {
         top: 40%; /* Adjust based on your design */
         left: 50%;
         transform: translateX(-50%); /* Center horizontally */
-        object-fit: contain;
     }
 
     #loadingText {
