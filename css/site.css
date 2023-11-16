@@ -121,6 +121,6 @@ html {
     #videoPlayerContainer {
         width: 100%; /* Adjust based on your design */
         height: auto; /* Allow the height to adjust based on the video's aspect ratio */
-        padding-top: 0; /* Remove padding-top for responsive scaling */
+        padding-top: 56.25%; /* Remove padding-top for responsive scaling */
     }
 }
