@@ -98,6 +98,7 @@ html {
     }
 
     #loadingBar {
+        object-fit: contain;
         top: 5%; /* Adjust based on your design */
         left: 5%; /* Adjust based on your design */
     }
