@@ -5,13 +5,6 @@ body, h1, h2, p, div, video {
     border: 0;
 }
 
-#commonContainer {
-    position: absolute;
-    width: 100%; /* Adjust width as needed */
-    height: 100vh; /* Adjust height as needed */
-    overflow: hidden; /* Ensure no overflow issues */
-}
-
 #tranVideo {
     z-index: 2; /* Ensure tranVideo appears in front of videoPlayerContainer */
 }
