@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const loadingText = document.getElementById('loadingText'); // Add this line to get the loading text element
 
     let currentVideoIndex = 0;
+    let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
     const preloadedVideos = [];
@@ -74,13 +75,19 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Start audio playback if not already playing
-        if (!audioPlaying) {
-            createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-            const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
-            audioPlaying = true;
+        // Start video playback if not already playing
+        if (!videoPlaying) {
+            // Assuming you've preloaded the tranVideo, no need to register it again
+            const tranVideo = document.getElementById('tranVideo');
+            tranVideo.currentTime = audioStartTime;
+            tranVideo.play().catch(error => {
+                console.error('Video playback error:', error.message);
+            });
 
-            // Hide the loading screen when audio starts playing
+            // Set videoPlaying to true
+            videoPlaying = true;
+
+            // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
         }
     });
