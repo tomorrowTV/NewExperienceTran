@@ -99,8 +99,8 @@ html {
 
     #loadingBar {
         top: 18%; /* Adjust based on your design */
-        left: 4%; /* Adjust based on your design */
-        width: 53%; /* Adjust based on your design */
+        left: 3%; /* Adjust based on your design */
+        width: 55%; /* Adjust based on your design */
         height: auto; /* Allow the height to adjust based on the image's aspect ratio */
         position: absolute; /* Ensure absolute positioning */
     }
@@ -112,7 +112,7 @@ html {
     }
 
     #loadingText {
-        font-size: 40px; /* Adjust as needed for smaller screens */
+        font-size: 50px; /* Adjust as needed for smaller screens */
         top: 50%; /* Adjust based on your design */
     }
 }
