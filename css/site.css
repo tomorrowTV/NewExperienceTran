@@ -5,6 +5,13 @@ body, h1, h2, p, div, video {
     border: 0;
 }
 
+#commonContainer {
+    position: relative;
+    width: 100%; /* Adjust width as needed */
+    height: 100vh; /* Adjust height as needed */
+    overflow: hidden; /* Ensure no overflow issues */
+}
+
 #tranVideo {
     position: absolute;
     top: 0;
