@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Define assets to preload
     const assetsToLoad = [
         'wwwroot/assets/CowboyHead.gif',
-        'wwwroot/assets/Song.m4a',
+        'wwwroot/assets/TranVid.mp4',
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
         'wwwroot/videos/SW3.mp4',
