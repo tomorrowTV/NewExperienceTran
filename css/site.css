@@ -24,20 +24,10 @@ body, h1, h2, p, div, video {
 
 /* Video container */
 #videoPlayerContainer {
-    position: relative;
+    position: absolute;
     padding-top: 56.25%; /* 16:9 aspect ratio (height:width) for responsive scaling */
     overflow: hidden;
     z-index: 1; /* Lower z-index for videoPlayerContainer */
-}
-
-/* Video player */
-video {
-    position: absolute;
-    top: 0;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Adjust the object-fit property based on your preferences */
 }
 
 /* Additional styles for other elements if needed */
