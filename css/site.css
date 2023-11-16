@@ -102,6 +102,7 @@ html {
         left: 5%; /* Adjust based on your design */
         width: 50%; /* Adjust based on your design */
         height: auto; /* Allow the height to adjust based on the image's aspect ratio */
+        position: absolute; /* Ensure absolute positioning */
     }
 
     #loadingTextContainer {
