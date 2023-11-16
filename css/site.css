@@ -20,7 +20,6 @@ video {
 /* Video container */
 #videoPlayerContainer {
     position: absolute;
-    padding-top: none; /* 16:9 aspect ratio (height:width) for responsive scaling */
     top: 0;
     left: 0;
     width: 100%;
