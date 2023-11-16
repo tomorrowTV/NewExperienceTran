@@ -30,16 +30,6 @@ body, h1, h2, p, div, video {
     z-index: 1; /* Lower z-index for videoPlayerContainer */
 }
 
-/* Video player */
-video {
-    position: absolute;
-    top: 0;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Adjust the object-fit property based on your preferences */
-}
-
 /* Additional styles for other elements if needed */
 body {
     background-color: black;
