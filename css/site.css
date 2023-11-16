@@ -98,7 +98,7 @@ html {
     }
 
     #loadingBar {
-        top: -25%; /* Adjust based on your design */
+        top: 0%; /* Adjust based on your design */
         left: 5%; /* Adjust based on your design */
         width: 50%; /* Adjust based on your design */
         height: auto; /* Allow the height to adjust based on the image's aspect ratio */
