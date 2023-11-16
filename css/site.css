@@ -24,7 +24,7 @@ body, h1, h2, p, div, video {
 
 /* Video container */
 #videoPlayerContainer {
-    position: absolute;
+    position: relative;
     padding-top: none; /* 16:9 aspect ratio (height:width) for responsive scaling */
     overflow: hidden;
     z-index: 1; /* Lower z-index for videoPlayerContainer */
