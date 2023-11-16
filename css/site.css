@@ -6,7 +6,7 @@ body, h1, h2, p, div, video {
 }
 
 #commonContainer {
-    position: relative;
+    position: absolute;
     width: 100%; /* Adjust width as needed */
     height: 100vh; /* Adjust height as needed */
     overflow: hidden; /* Ensure no overflow issues */
@@ -24,7 +24,7 @@ body, h1, h2, p, div, video {
 
 /* Video container */
 #videoPlayerContainer {
-    position: relative;
+    position: absolute;
     padding-top: 56.25%; /* 16:9 aspect ratio (height:width) for responsive scaling */
     overflow: hidden;
     z-index: 1; /* Lower z-index for videoPlayerContainer */
