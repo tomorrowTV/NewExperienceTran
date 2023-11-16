@@ -25,7 +25,6 @@ video {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     overflow: hidden;
     z-index: 1; /* Lower z-index for videoPlayerContainer */
 }
@@ -91,20 +90,5 @@ html {
     }
     50% {
         opacity: 1; /* Fully opaque in the middle of the animation */
-    }
-}
-
-/* Media query for screens smaller than 768px (typical mobile devices) */
-@media (max-width: 767px) {
-    #commonContainer {
-        height: auto; /* Adjust height for smaller screens */
-    }
-
-    #videoPlayerContainer {
-        padding-top: 100%; /* Adjust for square videoPlayerContainer on smaller screens */
-    }
-
-    #loadingText {
-        font-size: 40px; /* Adjust font size for smaller screens */
     }
 }
