@@ -119,8 +119,6 @@ html {
     }
 
     #videoPlayerContainer {
-        width: 100%; /* Adjust based on your design */
-        height: auto; /* Allow the height to adjust based on the video's aspect ratio */
-        padding-top: 56.25%; /* Remove padding-top for responsive scaling */
+        object-fit: contain; /* Adjust based on your preference */
     }
 }
