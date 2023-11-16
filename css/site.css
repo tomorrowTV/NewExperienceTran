@@ -55,8 +55,8 @@ html {
 
 #loadingBar {
     position: absolute;
-    top: 9%;
-    left: 10%;/* Add your styles for the loading bar here */
+    top: 0%;
+    left: 0%;/* Add your styles for the loading bar here */
     object-fit: contain;
 }
 
