@@ -57,7 +57,7 @@ html {
     position: absolute;
     top: 9%;
     left: 10%;/* Add your styles for the loading bar here */
-    object-fit: cover;
+    object-fit: contain;
 }
 
 #loadingTextContainer {
