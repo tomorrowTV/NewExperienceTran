@@ -78,13 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Start video playback if not already playing
         if (!videoPlaying) {
             // Assuming you've preloaded the tranVideo source, no need to register it again
-            const tranVideoSource = 'wwwroot/videos/YourTransparentVideo.mp4';
+            const tranVideoSource = 'wwwroot/assets/TranVid.mov';
 
             const tranVideo = document.createElement('video');
             tranVideo.src = tranVideoSource;
             tranVideo.preload = 'auto';
             tranVideo.setAttribute('playsinline', '');
             tranVideo.setAttribute('loop', 'true'); // Add the loop attribute
+            tranVideo.setAttribute('autoplay', ''); // Add the autoplay attribute
 
             tranVideo.play().catch(error => {
                 console.error('Video playback error:', error.message);
