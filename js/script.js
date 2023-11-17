@@ -91,6 +91,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
+        } else {
+            // If tranVideo is already playing, update its currentTime
+            tranVideo.currentTime = audioStartTime;    
         }      
     });
 
