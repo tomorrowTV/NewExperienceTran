@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
+    let firstClick = false;
     const preloadedVideos = [];
 
     // Define assets to preload
