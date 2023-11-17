@@ -68,41 +68,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-        // Switch to the next video
-        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-
         // Set the audio start time to match the current time in the current video
         audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+
+        // Switch to the next video
+        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+        playVideoByIndex(currentVideoIndex);
 
         // Start video playback if not already playing
         const tranVideo = document.getElementById('tranVideo');
         if (!videoPlaying) {
-            // Check if the video element is ready to play
-            if (tranVideo.readyState >= 2) {
-                tranVideo.currentTime = audioStartTime;
-
-                // Mute the video for autoplay on mobile
-                tranVideo.muted = true;
-
-                // Play tranVideo
-                tranVideo.play().then(() => {
-                    console.log('tranVideo playback started successfully.');
-                }).catch(error => {
-                    console.error('tranVideo playback error:', error.message);
-                });
-
-                // Set videoPlaying to true
-                videoPlaying = true;
-            } else {
-                console.error('tranVideo not ready to play.');
-            }
-        }
-
-        // Start background video playback
-        playVideoByIndex(currentVideoIndex);
-
-        // Hide the loading screen when media starts playing
+            tranVideo.play();
+            videoPlaying = true;
+        
+        // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
+        
+        }
     });
 
     // Function to start the game
