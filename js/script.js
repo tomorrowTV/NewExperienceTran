@@ -76,26 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
         playVideoByIndex(currentVideoIndex);
 
         // Start video playback if not already playing
-        if (!videoPlaying) {
-            const tranVideo = document.createElement('video');
-            tranVideo.src = 'wwwroot/assets/TranVid.mov';
-            tranVideo.preload = 'auto';
-            tranVideo.setAttribute('playsinline', '');
-            tranVideo.setAttribute('loop', 'true'); // Add the loop attribute
-            tranVideo.setAttribute('autoplay', ''); // Add the autoplay attribute
+        const tranVideo = document.getElementById('tranVideo');
+        if (!videoPlaying) tranVideo.play().catch(error => console.error('Video playback error:', error.message));
+        videoPlaying = true;
 
-            tranVideo.play()
-                .then(() => {
-                    console.log('Video playback started successfully.');
-                })
-                .catch(error => {
-                    console.error('Video playback error:', error.message);
-                });
-            // Set videoPlaying to true
-            videoPlaying = true;
 
-            // Hide the loading screen when video starts playing
-            loadingScreen.style.display = 'none';
+        // Hide the loading screen when video starts playing
+        loadingScreen.style.display = 'none';
         }
 
     });
