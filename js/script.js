@@ -69,9 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-        // Set the audio start time to match the current time in the current video
-        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
-
+        
         // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
@@ -79,11 +77,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Start video playback if not already playing
         const tranVideo = document.getElementById('tranVideo');
         if (!videoPlaying) {
-            tranVideo.play();
+            tranVideo.currentTime = audioStartTime;
+            tranVideo.play().catch(error => console.error('Video playback error:', error.message));
             videoPlaying = true;
         
-        // Hide the loading screen when video starts playing
-        loadingScreen.style.display = 'none';
+            // Hide the loading screen when video starts playing
+            loadingScreen.style.display = 'none';
         
         }
     });
