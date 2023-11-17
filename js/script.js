@@ -81,6 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (tranVideo.readyState >= 2) {
                 tranVideo.currentTime = audioStartTime;
 
+                // Mute the video for autoplay on mobile
+                tranVideo.muted = true;
+
                 // Play tranVideo
                 tranVideo.play().then(() => {
                     console.log('tranVideo playback started successfully.');
