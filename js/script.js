@@ -80,7 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // Check if the video element is ready to play
             if (tranVideo.readyState >= 2) {
                 tranVideo.currentTime = audioStartTime;
-                tranVideo.play().catch(error => console.error('Video playback error:', error.message));
+                tranVideo.play().then(() => {
+                    console.log('tranVideo playback started successfully.');
+                }).catch(error => {
+                    console.error('tranVideo playback error:', error.message);
+                });
                 videoPlaying = true;
             } else {
                 console.error('Video not ready to play.');
