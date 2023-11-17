@@ -69,7 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-        
+         // Set the audio start time to match the current time in the current video
+        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+
         // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
