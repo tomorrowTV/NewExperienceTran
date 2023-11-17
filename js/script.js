@@ -79,8 +79,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Start video playback if not already playing
         const tranVideo = document.getElementById('tranVideo');
         if (!videoPlaying) {
+            // Set the current time for both videos
             tranVideo.currentTime = audioStartTime;
+            preloadedVideos[currentVideoIndex].currentTime = audioStartTime;
+
+            // Play both videos
             tranVideo.play().catch(error => console.error('Video playback error:', error.message));
+            preloadedVideos[currentVideoIndex].play().catch(error => console.error('newVideo playback error:', error.message));
+            
             videoPlaying = true;
         
             // Hide the loading screen when video starts playing
