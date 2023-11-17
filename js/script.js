@@ -84,10 +84,13 @@ document.addEventListener('DOMContentLoaded', function () {
             tranVideo.setAttribute('loop', 'true'); // Add the loop attribute
             tranVideo.setAttribute('autoplay', ''); // Add the autoplay attribute
 
-            tranVideo.play().catch(error => {
-                console.error('Video playback error:', error.message);
-            });
-
+            tranVideo.play()
+                .then(() => {
+                    console.log('Video playback started successfully.');
+                })
+                .catch(error => {
+                    console.error('Video playback error:', error.message);
+                });
             // Set videoPlaying to true
             videoPlaying = true;
 
