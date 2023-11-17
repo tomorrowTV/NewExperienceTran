@@ -77,12 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start video playback if not already playing
         const tranVideo = document.getElementById('tranVideo');
-        if (!videoPlaying) tranVideo.play().catch(error => console.error('Video playback error:', error.message));
-        videoPlaying = true;
-
-
+        if (!videoPlaying) {
+            tranVideo.play();
+            videoPlaying = true;
+        
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
+        
         }
 
     });
