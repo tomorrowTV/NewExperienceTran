@@ -80,11 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // Assuming you've preloaded the tranVideo source, no need to register it again
             const tranVideoSource = 'wwwroot/videos/YourTransparentVideo.mp4';
 
-            const tranVideo = new Audio(tranVideoSource);
-            tranVideo.currentTime = audioStartTime;
-
-            // Add the 'playsinline' attribute for mobile devices
+            const tranVideo = document.createElement('video');
+            tranVideo.src = tranVideoSource;
+            tranVideo.preload = 'auto';
             tranVideo.setAttribute('playsinline', '');
+            tranVideo.setAttribute('loop', 'true'); // Add the loop attribute
 
             tranVideo.play().catch(error => {
                 console.error('Video playback error:', error.message);
@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Set videoPlaying to true
             videoPlaying = true;
+
+            // Hide the loading screen when video starts playing
+            loadingScreen.style.display = 'none';
         }
 
     });
