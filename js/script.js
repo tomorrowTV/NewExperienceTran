@@ -79,31 +79,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Start video playback if not already playing
         const tranVideo = document.getElementById('tranVideo');
         if (!videoPlaying) {
-            // Set the current time for both videos
+            tranVideo.muted = true; // Add this line
             tranVideo.currentTime = audioStartTime;
-            preloadedVideos[currentVideoIndex].currentTime = audioStartTime;
-
-            // Add event listeners for 'canplay' event
-            tranVideo.addEventListener('canplay', onCanPlay);
-            preloadedVideos[currentVideoIndex].addEventListener('canplay', onCanPlay);
-
-            // Play both videos when they can play
-            function onCanPlay() {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-                preloadedVideos[currentVideoIndex].play().catch(error => console.error('newVideo playback error:', error.message));
-
-                // Remove event listeners to avoid multiple playbacks
-                tranVideo.removeEventListener('canplay', onCanPlay);
-                preloadedVideos[currentVideoIndex].removeEventListener('canplay', onCanPlay);
-
-                videoPlaying = true;
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+            videoPlaying = true;
         
-                // Hide the loading screen when video starts playing
-                loadingScreen.style.display = 'none';
-        
-            }
-        }    
-            
+            // Hide the loading screen when video starts playing
+            loadingScreen.style.display = 'none';
+        }      
     });
 
     // Function to start the game
