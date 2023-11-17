@@ -15,7 +15,7 @@ video {
     left: 0%;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Adjust the object-fit property based on your preferences */
+    object-fit: cover; /* Adjust the object-fit property based on your preferences */
 }
 /* Video container */
 #videoPlayerContainer {
@@ -24,7 +24,7 @@ video {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     z-index: 1; /* Lower z-index for videoPlayerContainer */
 }
 
