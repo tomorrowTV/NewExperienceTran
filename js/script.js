@@ -83,6 +83,11 @@ document.addEventListener('DOMContentLoaded', function () {
             tranVideo.currentTime = audioStartTime;
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             videoPlaying = true;
+
+            // Unmute tranVideo after 1000 milliseconds (1 second)
+            setTimeout(() => {
+                tranVideo.muted = false;
+            }, 1000);
         
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
