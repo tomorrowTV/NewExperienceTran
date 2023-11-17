@@ -93,11 +93,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Video playback error:', error.message);
                 });
             
-            // Set videoPlaying to true
-            videoPlaying = true;
+                // Set videoPlaying to true
+                videoPlaying = true;
            
-            // Hide the loading screen when video starts playing
-            loadingScreen.style.display = 'none';
+                // Hide the loading screen when video starts playing
+                loadingScreen.style.display = 'none';
+            }
         }      
     });
 
