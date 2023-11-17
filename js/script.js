@@ -80,13 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!videoPlaying) {
             tranVideo.play();
             videoPlaying = true;
-        }
-
+        
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
-    });
-
-    });
+    }
+ });
 
     // Function to start the game
     function startGame() {
