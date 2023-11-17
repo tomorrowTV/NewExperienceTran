@@ -70,35 +70,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-        if (!firstClick) {
-            firstClick = true;
+        // Set the audio start time to match the current time in the current video
+        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
-            // Set the audio start time to match the current time in the current video
-            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+        // Switch to the next video
+        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+        playVideoByIndex(currentVideoIndex);
 
-            // Switch to the next video
-            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-            playVideoByIndex(currentVideoIndex);
+        // Start video playback if not already playing
+        if (!videoPlaying) {
+            const tranVideo = document.createElement('video');
+            tranVideo.src = 'wwwroot/assets/TranVid.mov';
+            tranVideo.preload = 'auto';
+            tranVideo.setAttribute('playsinline', '');
+            tranVideo.setAttribute('loop', 'true'); // Add the loop attribute
+            tranVideo.setAttribute('autoplay', ''); // Add the autoplay attribute
 
-            // Start video playback if not already playing
-            if (!videoPlaying) {
-                const tranVideo = document.createElement('video');
-                tranVideo.src = 'wwwroot/assets/TranVid.mov';
-                tranVideo.preload = 'auto';
-                tranVideo.setAttribute('playsinline', '');
-                tranVideo.setAttribute('loop', 'true'); // Add the loop attribute
-                tranVideo.setAttribute('autoplay', ''); // Add the autoplay attribute
-
-                tranVideo.play().catch(error => {
-                    console.error('Video playback error:', error.message);
-                });
+            tranVideo.play().catch(error => {
+                console.error('Video playback error:', error.message);
+            });
             
-                // Set videoPlaying to true
-                videoPlaying = true;
+            // Set videoPlaying to true
+            videoPlaying = true;
            
-                // Hide the loading screen when video starts playing
-                loadingScreen.style.display = 'none';
-            }
+            // Hide the loading screen when video starts playing
+            loadingScreen.style.display = 'none';
         }      
     });
 
