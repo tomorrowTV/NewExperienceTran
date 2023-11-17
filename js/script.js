@@ -76,19 +76,21 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Start video playback if not already playing
+        // Get the tranVideo element
         const tranVideo = document.getElementById('tranVideo');
-        if (!videoPlaying) {
-            tranVideo.muted = true; // Add this line
+
+        // Check if tranVideo is paused (not playing)
+        if (tranVideo.paused) {
+            tranVideo.muted = true;
             tranVideo.currentTime = audioStartTime;
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            videoPlaying = true;
 
             // Unmute tranVideo after 1000 milliseconds (1 second)
             setTimeout(() => {
                 tranVideo.muted = false;
             }, 1000);
-        
+
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+           
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
         } else {
