@@ -83,8 +83,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
-    }
- });
+        
+        }
+    });
 
     // Function to start the game
     function startGame() {
