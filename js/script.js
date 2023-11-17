@@ -77,19 +77,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start video playback if not already playing
         if (!videoPlaying) {
-            // Assuming you've preloaded the tranVideo, no need to register it again
-            const tranVideo = document.getElementById('tranVideo');
+            // Assuming you've preloaded the tranVideo source, no need to register it again
+            const tranVideoSource = 'wwwroot/videos/YourTransparentVideo.mp4';
+
+            const tranVideo = new Audio(tranVideoSource);
             tranVideo.currentTime = audioStartTime;
+
+            // Add the 'playsinline' attribute for mobile devices
+            tranVideo.setAttribute('playsinline', '');
+
             tranVideo.play().catch(error => {
                 console.error('Video playback error:', error.message);
             });
 
             // Set videoPlaying to true
             videoPlaying = true;
-
-            // Hide the loading screen when video starts playing
-            loadingScreen.style.display = 'none';
         }
+
     });
 
     // Function to start the game
