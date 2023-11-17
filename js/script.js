@@ -67,35 +67,35 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('After play');
     }
 
+    let firstClick = true; // Flag to track the first user click
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-         // Set the audio start time to match the current time in the current video
-        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+        // Check if it's the first user click
+        if (firstClick) {
+            // Set the audio start time to match the current time in the current video
+            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
-        // Switch to the next video
-        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        playVideoByIndex(currentVideoIndex);
+            // Switch to the next video
+            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+            playVideoByIndex(currentVideoIndex);
 
-        // Get the tranVideo element
-        const tranVideo = document.getElementById('tranVideo');
+            // Get the tranVideo element
+            const tranVideo = document.getElementById('tranVideo');
 
-        // Check if tranVideo is paused (not playing)
-        if (tranVideo.paused) {
-            tranVideo.muted = true;
+            // Play tranVideo with audioStartTime and mute it
             tranVideo.currentTime = audioStartTime;
+            tranVideo.muted = true;
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
 
             // Unmute tranVideo after 1000 milliseconds (1 second)
             setTimeout(() => {
                 tranVideo.muted = false;
             }, 1000);
-
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
            
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
-        } else {
-            // If tranVideo is already playing, update its currentTime
-            tranVideo.currentTime = audioStartTime;    
+
+            firstClick = false; // Set the flag to false after the first user click
         }      
     });
 
