@@ -80,23 +80,27 @@ document.addEventListener('DOMContentLoaded', function () {
             // Check if the video element is ready to play
             if (tranVideo.readyState >= 2) {
                 tranVideo.currentTime = audioStartTime;
+
+                // Play tranVideo
                 tranVideo.play().then(() => {
                     console.log('tranVideo playback started successfully.');
                 }).catch(error => {
                     console.error('tranVideo playback error:', error.message);
                 });
+
+                // Set videoPlaying to true
                 videoPlaying = true;
             } else {
-                console.error('Video not ready to play.');
+                console.error('tranVideo not ready to play.');
             }
         }
 
-    // Start background video playback
-    playVideoByIndex(currentVideoIndex);
+        // Start background video playback
+        playVideoByIndex(currentVideoIndex);
 
-    // Hide the loading screen when media starts playing
-    loadingScreen.style.display = 'none';
-});
+        // Hide the loading screen when media starts playing
+        loadingScreen.style.display = 'none';
+    });
 
     // Function to start the game
     function startGame() {
