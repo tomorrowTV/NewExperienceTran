@@ -60,10 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the current time in the video to match the audio start time
         newVideo.currentTime = audioStartTime;
 
-        // Play the video
+        console.log('Before play: audioStartTime =', audioStartTime);
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
+        console.log('After play');
     }
 
     // Add an event listener for user clicks to switch videos
