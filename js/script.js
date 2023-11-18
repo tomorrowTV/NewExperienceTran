@@ -102,11 +102,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true; // Mute tranVideo initially
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-
-        // Unmute tranVideo after 1000 milliseconds (1 second)
-        setTimeout(() => {
-            tranVideo.muted = false;
-        }, 0);
     });
 
     // Function to start the game
