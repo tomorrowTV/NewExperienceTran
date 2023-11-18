@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Unmute tranVideo after 1000 milliseconds (1 second)
         setTimeout(() => {
             tranVideo.muted = false;
-        }, 1);
+        }, 0);
     });
 
     // Function to start the game
