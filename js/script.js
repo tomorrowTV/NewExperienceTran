@@ -65,13 +65,31 @@ document.addEventListener('DOMContentLoaded', function () {
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
+
+        // Preload the next video while the current video is playing
+        preloadNextVideo();
+        
         console.log('After play');
+    }
+
+    // Function to preload the next video in the array
+    function preloadNextVideo() {
+        const nextIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+        const nextVideo = preloadedVideos[nextIndex];
+
+        if (!nextVideo.hasAttribute('src')) {
+            // Set the 'src' attribute to trigger preload
+            nextVideo.src = preloadedVideos[nextIndex].src;
+        }
     }
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
         // Set the audio start time to match the current time in the current video
         audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+
+        // Preload the next video
+        preloadNextVideo();
 
         // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
