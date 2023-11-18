@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
-        tranVideo.muted = true; // Mute tranVideo initially
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));   
     });
 
