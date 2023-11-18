@@ -69,29 +69,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-        // Set the audio start time to match the current time in the current video
-        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+        if (!tranVideoPlayed) {
+            // Set the audio start time to match the current time in the current video
+            audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
-        // Switch to the next video
-        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        playVideoByIndex(currentVideoIndex);
+            // Switch to the next video
+            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+            playVideoByIndex(currentVideoIndex);
 
-        // Start video playback if not already playing
-        const tranVideo = document.getElementById('tranVideo');
-        if (!videoPlaying) {
-            tranVideo.muted = true; // Add this line
-            tranVideo.currentTime = audioStartTime;
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            videoPlaying = true;
+            // Start video playback if not already playing
+            const tranVideo = document.getElementById('tranVideo');
+            if (!videoPlaying) {
+                tranVideo.muted = true; // Add this line
+                tranVideo.currentTime = audioStartTime;
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+                videoPlaying = true;
 
-            // Unmute tranVideo after 1000 milliseconds (1 second)
-            setTimeout(() => {
-                tranVideo.muted = false;
-            }, 1000);
+                // Unmute tranVideo after 1000 milliseconds (1 second)
+                setTimeout(() => {
+                    tranVideo.muted = false;
+                }, 1000);
            
-            // Hide the loading screen when video starts playing
-            loadingScreen.style.display = 'none';
-        }      
+                // Hide the loading screen when video starts playing
+                loadingScreen.style.display = 'none';
+                
+                // Set the flag to true after playing tranVideo
+                tranVideoPlayed = true;
+            }
+        }    
     });
 
     // Function to start the game
