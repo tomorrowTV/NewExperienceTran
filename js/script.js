@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
-    let firstClick = false;
     const preloadedVideos = [];
 
     // Define assets to preload
@@ -78,20 +77,17 @@ document.addEventListener('DOMContentLoaded', function () {
         playVideoByIndex(currentVideoIndex);
 
         // Start video playback if not already playing
+        const tranVideo = document.getElementById('tranVideo');
         if (!videoPlaying) {
-            const tranVideo = document.createElement('video');
-            tranVideo.src = 'wwwroot/assets/TranVid.mov';
-            tranVideo.preload = 'auto';
-            tranVideo.setAttribute('playsinline', '');
-            tranVideo.setAttribute('loop', 'true'); // Add the loop attribute
-            tranVideo.setAttribute('autoplay', ''); // Add the autoplay attribute
-
-            tranVideo.play().catch(error => {
-                console.error('Video playback error:', error.message);
-            });
-            
-            // Set videoPlaying to true
+            tranVideo.muted = true; // Add this line
+            tranVideo.currentTime = audioStartTime;
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             videoPlaying = true;
+
+            // Unmute tranVideo after 1000 milliseconds (1 second)
+            setTimeout(() => {
+                tranVideo.muted = false;
+            }, 1000);
            
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
