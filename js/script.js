@@ -93,10 +93,15 @@ document.addEventListener('DOMContentLoaded', function () {
            
                 // Hide the loading screen when video starts playing
                 loadingScreen.style.display = 'none';
-                
-                // Set the flag to true after playing tranVideo
-                tranVideoPlayed = true;
             }
+                
+            // Set the flag to true after playing tranVideo
+            tranVideoPlayed = true;
+        } else {
+            // Handle logic for user clicks after the first one
+            // For example, you can continue changing background videos
+            currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+            playVideoByIndex(currentVideoIndex);
         }    
     });
 
