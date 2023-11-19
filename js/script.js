@@ -125,4 +125,3 @@ document.addEventListener('DOMContentLoaded', function () {
         // Change loading text to "Click" when the game starts
         loadingText.textContent = 'Click';
     }
-});
