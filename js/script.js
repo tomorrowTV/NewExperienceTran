@@ -85,6 +85,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Start tranVideo when the loading screen disappears
+    const tranVideo = document.getElementById('tranVideo');
+    const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
         // Set the audio start time to match the current time in the current video
@@ -100,11 +104,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
 
-        // Start tranVideo when the loading screen disappears
-        const tranVideo = document.getElementById('tranVideo');
-        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-        if (!tranVideoAudioContext.state === 'running') {
+        // Start tranVideo when the loading screen disappear
+        if (!tranVideoAudioContext.state === 'suspended') {
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
