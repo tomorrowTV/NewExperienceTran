@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
-    let tranVideoAudioContext;
     const preloadedVideos = [];
 
     // Define assets to preload
@@ -62,17 +61,16 @@ document.addEventListener('DOMContentLoaded', function () {
         newVideo.currentTime = audioStartTime;
 
         console.log('Before play: audioStartTime =', audioStartTime);
-
-        // Once data is loaded, attempt to play the video
+        
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
-            
+
         // Preload the next video while the current video is playing
         preloadNextVideo();
         
         console.log('After play');
-    }        
+    }
 
     // Function to preload the next video in the array
     function preloadNextVideo() {
@@ -97,13 +95,14 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Continue with the original logic
+        // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
 
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true; // Mute tranVideo initially
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+
     });
 
     // Function to start the game
