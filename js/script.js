@@ -115,6 +115,15 @@ document.addEventListener('DOMContentLoaded', function () {
             tranVideoAudioInstance = createjs.Sound.createInstance('tranVideoAudio');
         }
 
+        // Debugging logs
+        console.log('Before tranVideo play');
+        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        console.log('After tranVideo play');
+
+        console.log('Before tranVideoAudio play');
+        tranVideoAudio.play().catch(error => console.error('tranVideoAudio playback error:', error.message));
+        console.log('After tranVideoAudio play');
+
         if (!tranVideoAudioContext.state === 'running') {
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
