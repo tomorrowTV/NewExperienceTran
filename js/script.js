@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
-    let tranVideoAudioContext;
     const preloadedVideos = [];
 
     // Define assets to preload
@@ -62,17 +61,16 @@ document.addEventListener('DOMContentLoaded', function () {
         newVideo.currentTime = audioStartTime;
 
         console.log('Before play: audioStartTime =', audioStartTime);
-
-        // Once data is loaded, attempt to play the video
+        
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
-            
+
         // Preload the next video while the current video is playing
         preloadNextVideo();
         
         console.log('After play');
-    }        
+    }
 
     // Function to preload the next video in the array
     function preloadNextVideo() {
@@ -85,9 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Start tranVideo when the loading screen disappears
-    const tranVideo = document.getElementById('tranVideo');
-    
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
         // Set the audio start time to match the current time in the current video
@@ -103,36 +98,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
 
-        // Initialize tranVideoAudioContext if it doesn't exist
-        if (!tranVideoAudioContext) {
-            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-        }
-
-        // Start tranVideo when the loading screen disappear
-        if (tranVideoAudioContext.state === 'suspended') {
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        }
-
-        // Preload the next video while the current video is playing
-        preloadNextVideo();
-
-        console.log('After play');
+        // Start tranVideo when the loading screen disappears
+        const tranVideo = document.getElementById('tranVideo');
+        tranVideo.muted = true; // Mute tranVideo initially
+        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
     });
-
-    // Function to preload the next video in the array
-    function preloadNextVideo() {
-        const nextIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        const nextVideo = preloadedVideos[nextIndex];
-
-        if (!nextVideo.hasAttribute('src')) {
-            // Set the 'src' attribute to trigger preload
-            nextVideo.src = preloadedVideos[nextIndex].src;
-        }
-    }
 
     // Function to start the game
     function startGame() {
