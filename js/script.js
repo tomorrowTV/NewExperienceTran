@@ -62,10 +62,20 @@ document.addEventListener('DOMContentLoaded', function () {
         newVideo.currentTime = audioStartTime;
 
         console.log('Before play: audioStartTime =', audioStartTime);
-        
-        newVideo.play().catch(error => {
-            console.error('Video playback error:', error.message);
+
+        // Add event listener for the 'loadeddata' event
+        newVideo.addEventListener('loadeddata', function () {
+            // Once data is loaded, attempt to play the video
+            newVideo.play().catch(error => {
+                console.error('Video playback error:', error.message);
         });
+            
+        // Preload the next video while the current video is playing
+        preloadNextVideo();
+        
+        console.log('After play');
+    });
+}        
 
         // Preload the next video while the current video is playing
         preloadNextVideo();
