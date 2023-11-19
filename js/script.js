@@ -113,8 +113,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Play tranVideo
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
 
-        // Play tranAudio
-        tranAudio.play().catch(error => console.error('tranAudio playback error:', error.message));
+        // Register 'tranAudio' with SoundJS
+        createjs.Sound.registerSound({ src: "wwwroot/assets/tranAudio.m4a", id: "tranAudio" });
+
+        // Play 'tranAudio'
+        createjs.Sound.play("tranAudio").catch(error => console.error('tranAudio playback error:', error.message));
     }
 
     // Function to start the game
