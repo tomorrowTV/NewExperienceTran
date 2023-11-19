@@ -102,41 +102,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
-        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
 
         // Mute tranVideo initially
         tranVideo.muted = true;
 
-        // Create a separate audio element for 'tranVideo'
-        const tranVideoAudio = new Audio('wwwroot/assets/TranVid.mov');
-        tranVideoAudio.muted = true;
-
-        // After a delay of 1000 milliseconds, unmute tranVideo
-        setTimeout(function () {
-            tranVideoAudio.muted = false;
-        }, 1000);
-
-        // Ensure tranVideoAudioInstance is created only once
-        if (!tranVideoAudioInstance) {
-            tranVideoAudioInstance = createjs.Sound.createInstance('tranVideoAudio');
+        // Check if tranVideo is playing before setting currentTime
+        if (!tranVideo.paused) {
+            // Set tranVideo currentTime to match the background video
+            tranVideo.currentTime = audioStartTime;
         }
 
-        // Debugging logs
-        console.log('Before tranVideo play');
-        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        console.log('After tranVideo play');
-
-        console.log('Before tranVideoAudio play');
-        tranVideoAudio.play().catch(error => console.error('tranVideoAudio playback error:', error.message));
-        console.log('After tranVideoAudio play');
-
-        if (!tranVideoAudioContext.state === 'running') {
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        }
+        // Unmute tranVideo only when it's the primary focus
+        tranVideo.addEventListener('click', function () {
+            tranVideo.muted = !tranVideo.muted;
+        });
     });
 
     // Function to start the game
