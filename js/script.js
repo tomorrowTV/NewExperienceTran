@@ -103,16 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
 
-        // Start tranVideo when the loading screen disappears
-        const tranVideo = document.getElementById('tranVideo');
-        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-        if (!tranVideoAudioContext.state === 'running') {
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        
         }
     });
 
