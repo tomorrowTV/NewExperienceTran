@@ -106,12 +106,23 @@ document.addEventListener('DOMContentLoaded', function () {
         // Mute tranVideo initially
         tranVideo.muted = true;
 
+        // Create a separate audio element for 'tranVideo'
+        const tranVideoAudio = new Audio('wwwroot/assets/TranVid.mov');
+        tranVideoAudio.muted = true; // Mute 'tranVideo' audio initially
+
+        // Register 'tranVideo' audio with CreateJS SoundJS
+        const tranVideoAudioInstance = createjs.Sound.createInstance('tranVideoAudio');
+        tranVideoAudioInstance.setPlaybackResource(tranVideoAudio);
+
         if (!tranVideoAudioContext.state === 'running') {
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
         } else {
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+
+            // Start 'tranVideo' audio playback
+            tranVideoAudioInstance.play();
         }
     });
 
