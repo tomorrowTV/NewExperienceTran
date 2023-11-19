@@ -77,11 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }        
 
-        // Preload the next video while the current video is playing
-        preloadNextVideo();
-        
-        console.log('After play');
-
     // Function to preload the next video in the array
     function preloadNextVideo() {
         const nextIndex = (currentVideoIndex + 1) % preloadedVideos.length;
