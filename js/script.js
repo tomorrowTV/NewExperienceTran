@@ -105,6 +105,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to play tranVideo
     function playTranVideo() {
+        // Mute tranVideo before playing
+        tranVideo.muted = true;
+
         // Play tranVideo
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
     }
