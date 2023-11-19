@@ -116,12 +116,13 @@ document.addEventListener('DOMContentLoaded', function () {
         // Continue with the original logic
         loadingScreen.style.display = 'none';
     });
+});
 
-    // Function to start the game
-    function startGame() {
-        // Start with the first video in the array
-        playVideoByIndex(0);
+// Function to start the game
+function startGame() {
+    // Start with the first video in the array
+    playVideoByIndex(0);
 
-        // Change loading text to "Click" when the game starts
-        loadingText.textContent = 'Click';
-    }
+    // Change loading text to "Click" when the game starts
+    loadingText.textContent = 'Click';
+}
