@@ -95,13 +95,13 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Hide the loading screen when video starts playing
-        loadingScreen.style.display = 'none';
-
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true; // Mute tranVideo initially
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+
+        // Hide the loading screen when video starts playing
+        loadingScreen.style.display = 'none';
     });
 
     // Function to start the game
