@@ -112,20 +112,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Play tranVideo
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        
+        // Register 'tranAudio' with SoundJS if not already registered
+        if (!createjs.Sound.loadComplete("tranAudio")) {
+            createjs.Sound.registerSound({ src: "wwwroot/assets/tranAudio.m4a", id: "tranAudio" });
+        }
 
-        // Register 'tranAudio' with SoundJS
-        createjs.Sound.registerSound({ src: "wwwroot/assets/tranAudio.m4a", id: "tranAudio" });
-
-        // Play 'tranAudio' and handle errors
+        // Play 'tranAudio' if not already playing
         const tranAudioInstance = createjs.Sound.play("tranAudio");
-        tranAudioInstance.addEventListener("complete", function () {
-            // Code to run when 'tranAudio' playback is complete
-            console.log('tranAudio playback complete');
-        });
-        tranAudioInstance.addEventListener("failed", function () {
-            // Code to run when 'tranAudio' playback fails
-            console.error('tranAudio playback failed');
-        });
+        if (!tranAudioInstance.playState) {
+            tranAudioInstance.addEventListener("complete", function () {
+                // Code to run when 'tranAudio' playback is complete
+                console.log('tranAudio playback complete');
+            });
+            tranAudioInstance.addEventListener("failed", function () {
+                // Code to run when 'tranAudio' playback fails
+                console.error('tranAudio playback failed');
+            });
+        }
     }
 
     // Function to start the game
