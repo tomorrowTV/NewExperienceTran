@@ -111,6 +111,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const tranVideoAudio = new Audio('wwwroot/assets/TranVid.mov');
         tranVideoAudio.muted = true;
 
+        // After a delay of 1000 milliseconds, unmute tranVideo
+        setTimeout(function () {
+            tranVideoAudio.muted = false;
+        }, 1000);
+
         // Ensure tranVideoAudioInstance is created only once
         if (!tranVideoAudioInstance) {
             tranVideoAudioInstance = createjs.Sound.createInstance('tranVideoAudio');
