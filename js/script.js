@@ -105,24 +105,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add event listener for the 'loadeddata' event
         tranVideo.addEventListener('loadeddata', function () {
-        // Once data is loaded, attempt to play the video
-        tranVideo.play().catch(error => {
-            console.error('tranVideo playback error:', error.message);
+            // Once data is loaded, attempt to play the video
+            tranVideo.play().catch(error => {
+                console.error('tranVideo playback error:', error.message);
+            });
+
+            // Set videoPlaying to true
+            videoPlaying = true;
+
+            // Continue with the original logic
+            loadingScreen.style.display = 'none';
         });
-
-        // Set videoPlaying to true
-        videoPlaying = true;
-
-        // Continue with the original logic
-        loadingScreen.style.display = 'none';
     });
-});
 
-// Function to start the game
-function startGame() {
-    // Start with the first video in the array
-    playVideoByIndex(0);
+    // Function to start the game
+    function startGame() {
+        // Start with the first video in the array
+        playVideoByIndex(0);
 
-    // Change loading text to "Click" when the game starts
-    loadingText.textContent = 'Click';
-}
+        // Change loading text to "Click" when the game starts
+        loadingText.textContent = 'Click';
+    }
