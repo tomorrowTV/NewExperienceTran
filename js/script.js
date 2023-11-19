@@ -110,9 +110,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const tranVideoAudio = new Audio('wwwroot/assets/TranVid.mov');
         tranVideoAudio.muted = true; // Mute 'tranVideo' audio initially
 
-        // Register 'tranVideo' audio with CreateJS SoundJS
-        const tranVideoAudioInstance = createjs.Sound.createInstance('tranVideoAudio');
-        tranVideoAudioInstance.setPlaybackResource(tranVideoAudio);
+        // Ensure tranVideoAudioInstance is created only once
+        if (!tranVideoAudioInstance) {
+            tranVideoAudioInstance = createjs.Sound.createInstance('tranVideoAudio');
+        }
 
         if (!tranVideoAudioContext.state === 'running') {
             tranVideoAudioContext.resume().then(() => {
