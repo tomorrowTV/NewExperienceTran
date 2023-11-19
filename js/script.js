@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const tranVideo = document.getElementById('tranVideo');
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
@@ -8,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
-    let tranVideoAudioContext;
     const preloadedVideos = [];
 
     // Define assets to preload
@@ -99,21 +99,15 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
 
-        // Start tranVideo when the loading screen disappears
-        const tranVideo = document.getElementById('tranVideo');
-        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-        // Mute tranVideo initially
-        tranVideo.muted = true;
-
-        if (!tranVideoAudioContext.state === 'running') {
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        }
+        // Call the function to play tranVideo
+        playTranVideo();
     });
+
+    // Function to play tranVideo
+    function playTranVideo() {
+        // Play tranVideo
+        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+    }
 
     // Function to start the game
     function startGame() {
