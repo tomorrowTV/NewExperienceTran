@@ -100,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
+        // Declare and define tranVideo
+        const tranVideo = document.getElementById('tranVideo');
+
         // Play tranVideo
         tranVideo.currentTime = audioStartTime;
 
