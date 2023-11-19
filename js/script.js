@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const tranVideo = document.getElementById('tranVideo');
+    const tranAudio = document.getElementById('tranAudio');
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Define assets to preload
     const assetsToLoad = [
         'wwwroot/assets/CowboyHead.gif',
+        'wwwroot/assets/tranAudio.m4a',
         'wwwroot/assets/TranVid.mov',
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
@@ -100,16 +102,19 @@ document.addEventListener('DOMContentLoaded', function () {
         loadingScreen.style.display = 'none';
 
         // Call the function to play tranVideo
-        playTranVideo();
+        playTranMedia();
     });
 
     // Function to play tranVideo
-    function playTranVideo() {
+    function playTranMedia() {
         // Mute tranVideo before playing
         tranVideo.muted = true;
 
         // Play tranVideo
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+
+        // Play tranAudio
+        tranAudio.play().catch(error => console.error('tranAudio playback error:', error.message));
     }
 
     // Function to start the game
