@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Start tranVideo when the loading screen disappears
     const tranVideo = document.getElementById('tranVideo');
-    const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let tranVideoAudioContext;
     
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
@@ -103,6 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
+
+        // Initialize tranVideoAudioContext if it doesn't exist
+        if (!tranVideoAudioContext) {
+            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
 
         // Start tranVideo when the loading screen disappear
         if (!tranVideoAudioContext.state === 'suspended') {
