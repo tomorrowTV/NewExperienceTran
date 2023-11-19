@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Create a separate audio element for 'tranVideo'
         const tranVideoAudio = new Audio('wwwroot/assets/TranVid.mov');
+        tranVideoAudio.muted = true;
 
         // Ensure tranVideoAudioInstance is created only once
         if (!tranVideoAudioInstance) {
