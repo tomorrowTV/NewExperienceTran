@@ -116,8 +116,16 @@ document.addEventListener('DOMContentLoaded', function () {
         // Register 'tranAudio' with SoundJS
         createjs.Sound.registerSound({ src: "wwwroot/assets/tranAudio.m4a", id: "tranAudio" });
 
-        // Play 'tranAudio'
-        createjs.Sound.play("tranAudio").catch(error => console.error('tranAudio playback error:', error.message));
+        // Play 'tranAudio' and handle errors
+        const tranAudioInstance = createjs.Sound.play("tranAudio");
+        tranAudioInstance.addEventListener("complete", function () {
+            // Code to run when 'tranAudio' playback is complete
+            console.log('tranAudio playback complete');
+        });
+        tranAudioInstance.addEventListener("failed", function () {
+            // Code to run when 'tranAudio' playback fails
+            console.error('tranAudio playback failed');
+        });
     }
 
     // Function to start the game
