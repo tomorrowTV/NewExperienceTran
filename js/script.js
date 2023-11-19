@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
         preloadNextVideo();
         
         console.log('After play');
-    }
 
     // Function to preload the next video in the array
     function preloadNextVideo() {
