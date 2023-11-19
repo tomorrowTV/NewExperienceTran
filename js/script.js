@@ -63,8 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('Before play: audioStartTime =', audioStartTime);
 
-        // Add event listener for the 'loadeddata' event
-        newVideo.addEventListener('loadeddata', function () {
             // Once data is loaded, attempt to play the video
             newVideo.play().catch(error => {
                 console.error('Video playback error:', error.message);
@@ -100,13 +98,13 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
+        // Continue with the original logic
+        loadingScreen.style.display = 'none';
+
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true; // Mute tranVideo initially
         tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-
-        // Continue with the original logic
-        loadingScreen.style.display = 'none';
     });
 
     // Function to start the game
