@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
+    let tranVideoAudioContext;
     const preloadedVideos = [];
 
     // Define assets to preload
@@ -100,8 +101,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
-        tranVideo.muted = true; // Mute tranVideo initially
-        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        if (!tranVideoAudioContext.state === 'running') {
+            tranVideoAudioContext.resume().then(() => {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+            });
+        } else {
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        }
     });
 
     // Function to start the game
