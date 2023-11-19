@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let audioPlaying = false;
     let audioStartTime = 0;
     let tranVideoAudioContext;
+    let tranVideoAudioInstance;
     const preloadedVideos = [];
 
     // Define assets to preload
