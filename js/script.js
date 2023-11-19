@@ -110,14 +110,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Start tranVideo when the loading screen disappear
-        if (!tranVideoAudioContext.state === 'suspended') {
+        if (tranVideoAudioContext.state === 'suspended') {
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
         } else {
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
+
+        // Preload the next video while the current video is playing
+        preloadNextVideo();
+
+        console.log('After play');
     });
+
+    // Function to preload the next video in the array
+    function preloadNextVideo() {
+        const nextIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+        const nextVideo = preloadedVideos[nextIndex];
+
+        if (!nextVideo.hasAttribute('src')) {
+            // Set the 'src' attribute to trigger preload
+            nextVideo.src = preloadedVideos[nextIndex].src;
+        }
+    }
 
     // Function to start the game
     function startGame() {
