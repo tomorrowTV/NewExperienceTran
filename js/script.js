@@ -68,14 +68,14 @@ document.addEventListener('DOMContentLoaded', function () {
             // Once data is loaded, attempt to play the video
             newVideo.play().catch(error => {
                 console.error('Video playback error:', error.message);
-        });
+            });
             
-        // Preload the next video while the current video is playing
-        preloadNextVideo();
+            // Preload the next video while the current video is playing
+            preloadNextVideo();
         
-        console.log('After play');
-    });
-}        
+            console.log('After play');
+        });
+    }        
 
         // Preload the next video while the current video is playing
         preloadNextVideo();
