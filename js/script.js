@@ -96,9 +96,16 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Hide the loading screen when video starts playing
-        loadingScreen.style.display = 'none';
+        // Start audio playback if not already playing
+        if (!audioPlaying) {
+            createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
+            const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+            audioPlaying = true;
 
+            // Hide the loading screen when video starts playing
+            loadingScreen.style.display = 'none';
+        }
+        
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
