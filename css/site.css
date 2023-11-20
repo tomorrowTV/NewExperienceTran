@@ -58,7 +58,7 @@ html {
     top: 25%; /* 25% of the viewport height */
     left: 50%; /* 50% of the viewport width */
     object-fit: contain;
-    transform: translateX(-50%); /* Center the loading bar horizontally */
+    transform: translate(-50%, -50%);
 }
 
 #loadingTextContainer {
