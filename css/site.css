@@ -55,16 +55,17 @@ html {
 
 #loadingBar {
     position: absolute;
-    top: 25%;
-    left: 30%;/* Add your styles for the loading bar here */
+    top: 25vh; /* 25% of the viewport height */
+    left: 50vw; /* 50% of the viewport width */
     object-fit: contain;
+    transform: translateX(-50%); /* Center the loading bar horizontally */
 }
 
 #loadingTextContainer {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translateY(-50%); /* Adjust the translation to center vertically based on the loading graphic's height */
+    top: 50vh; /* 50% of the viewport height */
+    left: 50vw; /* 50% of the viewport width */
+    transform: translate(-50%, -50%);
     z-index: 2; /* Ensure the text appears above the loading graphic */
 }
 
