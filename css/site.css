@@ -55,8 +55,8 @@ html {
 
 #loadingBar {
     position: absolute;
-    top: 25vh; /* 25% of the viewport height */
-    left: 50vw; /* 50% of the viewport width */
+    top: 25%; /* 25% of the viewport height */
+    left: 50%; /* 50% of the viewport width */
     object-fit: contain;
     transform: translateX(-50%); /* Center the loading bar horizontally */
 }
