@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const tranVideo = document.getElementById('tranVideo');
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
@@ -9,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
+    let tranVideoAudioContext;
     const preloadedVideos = [];
 
     // Define assets to preload
@@ -96,21 +96,31 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Hide the loading screen when video starts playing
-        loadingScreen.style.display = 'none';
+        // Start audio playback if not already playing
+        if (!audioPlaying) {
+            createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
+            const tranAudio = createjs.Sound.play('tranAudio', { loop: -1 });
+            audioPlaying = true;
 
-        // Call the function to play tranVideo
-        playTranVideo();
-    });
+            // Hide the loading screen when video starts playing
+            loadingScreen.style.display = 'none';
+        }
+        
+        // Start tranVideo when the loading screen disappears
+        const tranVideo = document.getElementById('tranVideo');
+        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-    // Function to play tranVideo
-    function playTranVideo() {
-        // Mute tranVideo before playing
+        // Mute tranVideo initially
         tranVideo.muted = true;
 
-        // Play tranVideo
-        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-    }
+        if (!tranVideoAudioContext.state === 'running') {
+            tranVideoAudioContext.resume().then(() => {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+            });
+        } else {
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        }
+    });
 
     // Function to start the game
     function startGame() {
