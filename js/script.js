@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const tranVideo = document.getElementById('tranVideo');
-    const tranAudio = document.getElementById('tranAudio');
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
@@ -10,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
+    let tranVideoAudioContext;
     const preloadedVideos = [];
 
     // Define assets to preload
     const assetsToLoad = [
         'wwwroot/assets/CowboyHead.gif',
-        'wwwroot/assets/tranAudio.m4a',
         'wwwroot/assets/TranVid.mov',
         'wwwroot/videos/SW1.mp4',
         'wwwroot/videos/SW2.mp4',
@@ -101,36 +99,21 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hide the loading screen when video starts playing
         loadingScreen.style.display = 'none';
 
-        // Call the function to play tranVideo
-        playTranMedia();
-    });
+        // Start tranVideo when the loading screen disappears
+        const tranVideo = document.getElementById('tranVideo');
+        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-    // Function to play tranVideo
-    function playTranMedia() {
-        // Mute tranVideo before playing
+        // Mute tranVideo initially
         tranVideo.muted = true;
 
-        // Play tranVideo
-        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        
-        // Register 'tranAudio' with SoundJS if not already registered
-        if (!createjs.Sound.loadComplete("tranAudio")) {
-            createjs.Sound.registerSound({ src: "wwwroot/assets/tranAudio.m4a", id: "tranAudio" });
-        }
-
-        // Play 'tranAudio' if not already playing
-        const tranAudioInstance = createjs.Sound.play("tranAudio");
-        if (!tranAudioInstance.playState) {
-            tranAudioInstance.addEventListener("complete", function () {
-                // Code to run when 'tranAudio' playback is complete
-                console.log('tranAudio playback complete');
+        if (!tranVideoAudioContext.state === 'running') {
+            tranVideoAudioContext.resume().then(() => {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
-            tranAudioInstance.addEventListener("failed", function () {
-                // Code to run when 'tranAudio' playback fails
-                console.error('tranAudio playback failed');
-            });
+        } else {
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
-    }
+    });
 
     // Function to start the game
     function startGame() {
