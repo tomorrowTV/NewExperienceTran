@@ -59,7 +59,7 @@ html {
     left: 28%; /* 50% of the viewport width */
     width: 50%; /* Adjust the width as needed */
     height: auto; /* Allow the height to adjust based on the image's aspect ratio */
-    object-fit: contain;
+    object-fit: scale-down;
     transform: translate(-50%, -50%);
 }
 
