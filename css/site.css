@@ -55,8 +55,8 @@ html {
 
 #loadingBar {
     position: absolute;
-    top: 25%; /* 25% of the viewport height */
-    left: 28%; /* 50% of the viewport width */
+    top: 32%; /* 25% of the viewport height */
+    left: 32%; /* 50% of the viewport width */
     width: 50%; /* Adjust the width as needed */
     height: auto; /* Allow the height to adjust based on the image's aspect ratio */
     object-fit: scale-down;
