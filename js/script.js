@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start audio playback if not already playing
         if (!audioPlaying) {
-            createjs.Sound.registerSound({ src: 'wwwroot/assets/Song.m4a', id: 'backgroundAudio' });
-            const backgroundAudio = createjs.Sound.play('backgroundAudio', { loop: -1 });
+            createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
+            const tranAudio = createjs.Sound.play('tranAudio', { loop: -1 });
             audioPlaying = true;
 
             // Hide the loading screen when video starts playing
