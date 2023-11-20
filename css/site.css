@@ -57,6 +57,8 @@ html {
     position: absolute;
     top: 25%; /* 25% of the viewport height */
     left: 28%; /* 50% of the viewport width */
+    width: 50%; /* Adjust the width as needed */
+    height: auto; /* Allow the height to adjust based on the image's aspect ratio */
     object-fit: contain;
     transform: translate(-50%, -50%);
 }
