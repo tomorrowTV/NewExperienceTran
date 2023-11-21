@@ -108,12 +108,10 @@ document.addEventListener('DOMContentLoaded', function () {
         
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
-        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-        // Mute tranVideo initially
         tranVideo.muted = true;
 
-        if (!tranVideoAudioContext.state === 'running') {
+        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
+            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
