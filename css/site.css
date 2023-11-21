@@ -103,7 +103,7 @@ html {
     #loadingBar {
         top: 30%; /* Adjust based on your design */
         left: 25%; /* Adjust based on your design */
-        width: 55%; /* Adjust based on your design */
+        width: 59%; /* Adjust based on your design */
         height: auto; /* Allow the height to adjust based on the image's aspect ratio */
         position: absolute; /* Ensure absolute positioning */
     }
