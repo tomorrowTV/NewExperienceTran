@@ -62,6 +62,15 @@ document.addEventListener('DOMContentLoaded', function () {
         newVideo.currentTime = audioStartTime;
 
         console.log('Before play: audioStartTime =', audioStartTime);
+
+        // Add an event listener for when the video ends
+        newVideo.addEventListener('ended', function () {
+            // Start the video over from the beginning
+            newVideo.currentTime = 0;
+            newVideo.play().catch(error => {
+                console.error('Video playback error:', error.message);
+            });
+        });
         
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
