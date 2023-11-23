@@ -128,11 +128,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 tranVideo.addEventListener('ended', function () {
                     // Hide tranVideo when it finishes playing
                     tranVideo.style.display = 'none';
+                });
 
-                    // Show tranVideo again when tranAudio finishes
-                    createjs.Sound.on('complete', 'tranAudio', function () {
-                        tranVideo.style.display = 'block';
-                    });
+                // Add an event listener for when the audio ends (looping)
+                tranAudio.addEventListener('ended', function () {
+                    // Show tranVideo again when tranAudio finishes (looping)
+                    tranVideo.style.display = 'block';
                 });
             });
         } else {
