@@ -108,11 +108,18 @@ document.addEventListener('DOMContentLoaded', function () {
         // Start audio playback if not already playing
         if (!audioPlaying) {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
-            const tranAudio = createjs.Sound.play('tranAudio', { loop: -1 });
+            const tranAudio = createjs.Sound.play('tranAudio');
             audioPlaying = true;
 
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
+
+            // Add an event listener for when tranAudio finishes
+            tranAudio.addEventListener('complete', function () {
+                // End the game when tranAudio finishes
+                // You can add your logic here to handle the end of the game
+                console.log('Game over!');
+            });
         }
         
         // Start tranVideo when the loading screen disappears
@@ -127,6 +134,11 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
+
+        // Add an event listener for when tranVideo finishes
+        tranVideo.addEventListener('ended', function () {
+            tranVideo.style.display = 'none';
+        });
     });
 
     // Function to start the game
