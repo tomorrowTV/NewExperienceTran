@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let audioStartTime = 0;
     let tranVideoAudioContext;
     const preloadedVideos = [];
+    let gameOver = false; // New flag to track the game state
 
     // Define assets to preload
     const assetsToLoad = [
@@ -95,6 +96,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
+
+        if (gameOver) {
+            // If the game is already over, do nothing
+            return;
+        }
+        
         // Set the audio start time to match the current time in the current video
         audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
@@ -119,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // End the game when tranAudio finishes
                 // You can add your logic here to handle the end of the game
                 console.log('Game over!');
+                gameOver = true;
             });
         }
         
