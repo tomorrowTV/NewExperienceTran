@@ -107,22 +107,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start audio playback if not already playing
         if (!audioPlaying) {
-            createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
-            const tranAudio = createjs.Sound.play('tranAudio', { loop: -1 });
+            const tranAudio = new Audio('wwwroot/assets/tranAudio.m4a');
+            tranAudio.loop = true;  // Set loop property for continuous playback
+            tranAudio.play().catch(error => console.error('tranAudio playback error:', error.message));
             audioPlaying = true;
 
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
         }
-        
-        // Start tranVideo when the loading screen disappears
-        const tranVideo = document.getElementById('tranVideo');
-        tranVideo.muted = true;
 
         if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+
+                // Add an event listener for when the video ends
+                tranVideo.addEventListener('ended', function () {
+                    // Hide tranVideo when it finishes playing
+                    tranVideo.style.display = 'none';
+                });
+
+                // Add an event listener for when either audio or video ends
+                const handleEnd = function () {
+                    // Show tranVideo again when either tranAudio or tranVideo finishes
+                    tranVideo.style.display = 'block';
+
+                    // Restart both tranAudio and tranVideo
+                    tranAudio.currentTime = 0;  // Reset audio playback to the beginning
+                    tranVideo.currentTime = 0;  // Reset video playback to the beginning
+
+                    tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));  // Restart video playback
+                };
+
+                tranAudio.addEventListener('ended', handleEnd);
+                tranVideo.addEventListener('ended', handleEnd);
             });
         } else {
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
