@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let audioPlaying = false;
     let audioStartTime = 0;
     let tranVideoAudioContext;
+    let tranAudio;
+    let tranVideo;
     const preloadedVideos = [];
 
     // Define assets to preload
@@ -93,6 +95,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Function to start the game
+    function startGame() {
+        // Start with the first video in the array
+        playVideoByIndex(0);
+
+        // Change loading text to "Click" when the game starts
+        loadingText.textContent = 'Click';
+    }
+
+    // Function to start tranAudio and tranVideo
+    function startAudioAndVideo() {
+        // Start tranAudio
+        createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
+        tranAudio = createjs.Sound.play('tranAudio', { loop: -1 });
+
+        // Start tranVideo when tranAudio starts playing
+        tranAudio.on('succeeded', function () {
+            tranVideo = document.getElementById('tranVideo');
+            tranVideo.muted = true;
+            
+            if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
+                tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                tranVideoAudioContext.resume().then(() => {
+                    tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+                });
+            } else {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+            }
+        });
+    }
+
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
         // Set the audio start time to match the current time in the current video
@@ -103,38 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        playVideoByIndex(currentVideoIndex);
-
-        // Start audio playback if not already playing
-        if (!audioPlaying) {
-            createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
-            const tranAudio = createjs.Sound.play('tranAudio', { loop: -1 });
-            audioPlaying = true;
-
-            // Hide the loading screen when video starts playing
-            loadingScreen.style.display = 'none';
-        }
-        
-        // Start tranVideo when the loading screen disappears
-        const tranVideo = document.getElementById('tranVideo');
-        tranVideo.muted = true;
-
-        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
-            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        }
     });
 
-    // Function to start the game
-    function startGame() {
-        // Start with the first video in the array
-        playVideoByIndex(0);
-
-        // Change loading text to "Click" when the game starts
-        loadingText.textContent = 'Click';
-    }
-});
+    // Close the main 'DOMContentLoaded' event listener
+    });
