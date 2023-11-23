@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to play video by index
     function playVideoByIndex(index) {
+
+        if (gameOver) {
+            // If the game is over, do not play the video
+            return;
+        }
+        
         const newVideo = preloadedVideos[index];
         videoPlayerContainer.innerHTML = ''; // Clear container
         videoPlayerContainer.appendChild(newVideo);
@@ -97,11 +103,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
 
-        if (gameOver) {
-            // If the game is already over, do nothing
-            return;
-        }
-        
         // Set the audio start time to match the current time in the current video
         audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
