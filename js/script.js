@@ -123,6 +123,17 @@ document.addEventListener('DOMContentLoaded', function () {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+
+                // Add an event listener for when the video ends
+                tranVideo.addEventListener('ended', function () {
+                    // Hide tranVideo when it finishes playing
+                    tranVideo.style.display = 'none';
+
+                    // Show tranVideo again when tranAudio finishes
+                    createjs.Sound.on('complete', 'tranAudio', function () {
+                        tranVideo.style.display = 'block';
+                    });
+                });
             });
         } else {
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
