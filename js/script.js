@@ -130,16 +130,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     tranVideo.style.display = 'none';
                 });
 
-                // Add an event listener for checking audio time to restart video
-                tranAudio.addEventListener('timeupdate', function () {
-                    // Check if audio has reached near the end (adjust the value as needed)
-                    if (tranAudio.currentTime > tranAudio.duration - 0.5) {
-                        // Show tranVideo again when tranAudio is near the end
-                        tranVideo.style.display = 'block';
-                        // Restart tranVideo
-                        tranVideo.currentTime = 0;
-                        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-                    }
+                // Add an event listener for checking audio ends looping
+                tranAudio.addEventListener('ended', function () {
+                    // Show tranVideo again when tranAudio finishes (looping)
+                    tranVideo.style.display = 'block';
+                    
+                    // Restart both tranAudio and tranVideo
+                    tranAudio.currentTime = 0;
+                    tranVideo.currentTime = 0;
+                    tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
                 });
             });
         } else {
