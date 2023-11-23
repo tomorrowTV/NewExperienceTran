@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 gameOverMessage.style.top = '50%';
                 gameOverMessage.style.left = '50%';
                 gameOverMessage.style.transform = 'translate(-50%, -50%)';
-                gameOverMessage.style.zIndex = '999'; // Set the z-index to a high value
+                gameOverMessage.style.zIndex = '1000'; // Set the z-index to a high value
                 document.body.appendChild(gameOverMessage);
             });
         }
