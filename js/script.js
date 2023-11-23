@@ -123,22 +123,6 @@ document.addEventListener('DOMContentLoaded', function () {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-
-                // Add an event listener for when either audio or video ends
-                const handleEnd = function () {
-                    // Show tranVideo again when either tranAudio or tranVideo finishes
-                    tranVideo.style.display = 'block';
-
-                    // Restart both tranAudio and tranVideo
-                    tranAudio.currentTime = 0;
-                    tranVideo.currentTime = 0;
-                    tranAudio.play().catch(error => console.error('tranAudio playback error:', error.message));
-                    tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-                };
-
-                // Add event listeners for when either audio or video ends
-                tranAudio.addEventListener('ended', handleEnd);
-                tranVideo.addEventListener('ended', handleEnd);
             });
         } else {
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
