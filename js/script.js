@@ -136,6 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+
+        // Start the audio and video
+        startAudioAndVideo();
     });
 
     // Close the main 'DOMContentLoaded' event listener
