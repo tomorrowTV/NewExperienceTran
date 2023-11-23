@@ -128,6 +128,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 // You can add your logic here to handle the end of the game
                 console.log('Game over!');
                 gameOver = true;
+
+                // Display "Game Over" message on the screen
+                const gameOverMessage = document.createElement('div');
+                gameOverMessage.textContent = 'Game Over';
+                gameOverMessage.style.fontSize = '30px'; // Adjust styling as needed
+                gameOverMessage.style.position = 'absolute';
+                gameOverMessage.style.top = '50%';
+                gameOverMessage.style.left = '50%';
+                gameOverMessage.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(gameOverMessage);
             });
         }
         
