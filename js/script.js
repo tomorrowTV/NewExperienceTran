@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (preloadedVideos.length === assetsToLoad.length - 1) {
             loadingBar.style.display = 'none';
+            loadingScreen.style.display = 'none';  // Added this line to hide the loading screen
+            videoPlayerContainer.style.display = 'block';  // Added this line to show the video player container
             startGame();
         }
     });
