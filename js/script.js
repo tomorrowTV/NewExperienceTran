@@ -132,7 +132,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Display "Game Over" message on the screen
                 const gameOverMessage = document.createElement('div');
                 gameOverMessage.textContent = 'Game Over';
-                gameOverMessage.style.fontSize = '30px'; // Adjust styling as needed
+                gameOverMessage.style.fontSize = '100px'; // Adjust styling as needed
+                gameOverMessage.style.fontFamily = 'Futura, sans-serif'; // Adjust font family as needed
+                gameOverMessage.style.fontWeight = 'bold'; // Adjust font weight as needed
+                gameOverMessage.style.color = 'red'; // Adjust font color as needed
+                gameOverMessage.style.textAlign = 'center'; // Center-align the text
+                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)'; // Add a simple text shadow
                 gameOverMessage.style.position = 'absolute';
                 gameOverMessage.style.top = '50%';
                 gameOverMessage.style.left = '50%';
