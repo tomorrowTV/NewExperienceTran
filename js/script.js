@@ -175,6 +175,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error starting audio or video:', error.message);
             });
         }
+    });
+
+    // Function to start the game
+    function startGame() {
+        // Start with the first video in the array
+        playVideoByIndex(0);
+
+        // Change loading text to "Click" when the game starts
+        loadingText.textContent = 'Click';
+    }
+
+    // Suggested modification: Function to start tranVideo
+    function startTranVideo() {
         
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
@@ -193,14 +206,4 @@ document.addEventListener('DOMContentLoaded', function () {
         tranVideo.addEventListener('ended', function () {
             tranVideo.style.display = 'none';
         });
-    });
-
-    // Function to start the game
-    function startGame() {
-        // Start with the first video in the array
-        playVideoByIndex(0);
-
-        // Change loading text to "Click" when the game starts
-        loadingText.textContent = 'Click';
     }
-});
