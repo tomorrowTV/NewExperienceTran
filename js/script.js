@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentVideoIndex = 0;
     let videoPlaying = false;
     let audioPlaying = false;
-    let audioContext;
+    let audioStartTime = 0;
     let tranVideoAudioContext;
     const preloadedVideos = [];
     let gameOver = false; // New flag to track the game state
@@ -40,8 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
             videoElement.src = asset;
             videoElement.preload = 'auto';
             videoElement.setAttribute('playsinline', '');
-            videoElement.style.display = 'none'; // Hide the video initially
-            document.body.appendChild(videoElement); // Append to the body to ensure proper playback on some browsers
             preloadedVideos.push(videoElement);
         }
 
@@ -54,11 +52,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to play video by index
     function playVideoByIndex(index) {
+
         if (gameOver) {
             // If the game is over, do not play the video
             return;
         }
-
+        
         const newVideo = preloadedVideos[index];
         videoPlayerContainer.innerHTML = ''; // Clear container
         videoPlayerContainer.appendChild(newVideo);
@@ -69,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set the current time in the video to match the audio start time
         newVideo.currentTime = audioStartTime;
 
+        console.log('Before play: audioStartTime =', audioStartTime);
+
         // Add an event listener for when the video ends
         newVideo.addEventListener('ended', function () {
             // Start the video over from the beginning
@@ -77,14 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Video playback error:', error.message);
             });
         });
-
+        
         newVideo.play().catch(error => {
             console.error('Video playback error:', error.message);
         });
 
         // Preload the next video while the current video is playing
         preloadNextVideo();
-
+        
         console.log('After play');
     }
 
@@ -99,74 +100,78 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        const audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+
+        // Set the audio start time to match the current time in the current video
+        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+
+        // Preload the next video
         preloadNextVideo();
 
+        // Switch to the next video
+        currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
+        playVideoByIndex(currentVideoIndex);
+
+        // Start audio playback if not already playing
         if (!audioPlaying) {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
-            const tranAudio = createjs.Sound.play('tranAudio', { interrupt: createjs.Sound.INTERRUPT_EARLY, volume: 1 });
+            const tranAudio = createjs.Sound.play('tranAudio');
             audioPlaying = true;
 
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-
+            // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
 
+            // Add an event listener for when tranAudio finishes
             tranAudio.addEventListener('complete', function () {
+                // End the game when tranAudio finishes
+                // You can add your logic here to handle the end of the game
                 console.log('Game over!');
                 gameOver = true;
 
+                // Display "Game Over" message on the screen
                 const gameOverMessage = document.createElement('div');
                 gameOverMessage.textContent = 'Coming Soon..';
-                gameOverMessage.style.fontSize = '75px';
-                gameOverMessage.style.fontFamily = 'Futura, sans-serif';
-                gameOverMessage.style.fontWeight = 'bold';
-                gameOverMessage.style.color = '#eab5ac';
-                gameOverMessage.style.textAlign = 'center';
-                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)';
+                gameOverMessage.style.fontSize = '75px'; // Adjust styling as needed
+                gameOverMessage.style.fontFamily = 'Futura, sans-serif'; // Adjust font family as needed
+                gameOverMessage.style.fontWeight = 'bold'; // Adjust font weight as needed
+                gameOverMessage.style.color = '#eab5ac'; // Adjust font color as needed
+                gameOverMessage.style.textAlign = 'center'; // Center-align the text
+                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)'; // Add a simple text shadow
                 gameOverMessage.style.position = 'absolute';
                 gameOverMessage.style.top = '50%';
                 gameOverMessage.style.left = '50%';
                 gameOverMessage.style.transform = 'translate(-50%, -50%)';
-                gameOverMessage.style.zIndex = '1000';
+                gameOverMessage.style.zIndex = '1000'; // Set the z-index to a high value
                 document.body.appendChild(gameOverMessage);
             });
         }
-
-        const tranVideo = preloadedVideos[currentVideoIndex];
+        
+        // Start tranVideo when the loading screen disappears
+        const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
 
-        if (!tranVideoAudioContext) {
+        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            tranVideoAudioContext.resume().then(() => {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+            });
+        } else {
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
 
+        // Add an event listener for when tranVideo finishes
         tranVideo.addEventListener('ended', function () {
             tranVideo.style.display = 'none';
         });
-
-        tranVideo.addEventListener('loadeddata', function () {
-            startTranAudio(tranVideo, tranVideoAudioContext);
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        });
     });
 
+    // Function to start the game
     function startGame() {
+        // Start with the first video in the array
         playVideoByIndex(0);
+
+        // Change loading text to "Click" when the game starts
         loadingText.textContent = 'Click';
-    }
-
-    function startTranAudio(mediaElement, context) {
-        if (context && context.state !== 'running') {
-            context.resume().then(() => {
-                // Connect mediaElement to the audio context
-                const source = context.createMediaElementSource(mediaElement);
-                source.connect(context.destination);
-
-                // Additional logic can be added if needed
-            });
-        }
     }
 });
