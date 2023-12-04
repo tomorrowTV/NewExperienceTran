@@ -101,8 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Add an event listener for user clicks to switch videos
-    document.addEventListener('click', function () {
-
+    document.addEventListener('click', async function () {
         // Set the audio start time to match the current time in the current video
         audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
@@ -111,19 +110,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        playVideoByIndex(currentVideoIndex);
+
+        // Use Promise.all to wait for both audio and video to be loaded before starting them
+        await Promise.all([
+            new Promise(resolve => {
+                createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio', onComplete: resolve });
+            }),
+            new Promise(resolve => {
+                const tranVideo = preloadedVideos[currentVideoIndex];
+                tranVideo.muted = true;
+
+                if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
+                    tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    tranVideoAudioContext.resume().then(() => {
+                        tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+                        resolve();
+                    });
+                } else {
+                    tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+                    resolve();
+                }
+
+                // Add an event listener for when tranVideo finishes
+                tranVideo.addEventListener('ended', function () {
+                    tranVideo.style.display = 'none';
+                });
+            })
+        ]);
 
         // Start audio playback if not already playing
         if (!audioPlaying) {
-            createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
-            const tranAudio = createjs.Sound.play('tranAudio');
+            createjs.Sound.play('tranAudio');
             audioPlaying = true;
 
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
 
             // Add an event listener for when tranAudio finishes
-            tranAudio.addEventListener('complete', function () {
+            createjs.Sound.addEventListener('complete', function () {
                 // End the game when tranAudio finishes
                 // You can add your logic here to handle the end of the game
                 console.log('Game over!');
@@ -146,24 +170,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.body.appendChild(gameOverMessage);
             });
         }
-        
-        // Start tranVideo when the loading screen disappears
-        const tranVideo = document.getElementById('tranVideo');
-        tranVideo.muted = true;
-
-        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
-            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        }
-
-        // Add an event listener for when tranVideo finishes
-        tranVideo.addEventListener('ended', function () {
-            tranVideo.style.display = 'none';
-        });
     });
 
     // Function to start the game
