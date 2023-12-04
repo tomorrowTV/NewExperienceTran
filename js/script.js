@@ -100,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
 
         // Set the audio start time to match the current time in the current video
@@ -146,13 +145,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.body.appendChild(gameOverMessage);
             });
         }
-        
+
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
 
+        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Add an event listener for when tranVideo finishes loading
+        tranVideo.addEventListener('loadeddata', function () {
+            // tranVideo has finished loading, start audio playback
+            startTranAudio();
+        });
+
         if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
-            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             tranVideoAudioContext.resume().then(() => {
                 tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
