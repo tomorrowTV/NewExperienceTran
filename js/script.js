@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const preloadedVideos = [];
     let gameOver = false;
 
-    // Define assets to preload
     const assetsToLoad = [
         'wwwroot/assets/CowboyHead.gif',
         'wwwroot/assets/TranVid.mov',
@@ -27,10 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const preload = new createjs.LoadQueue();
     preload.setMaxConnections(5);
 
-    // Preload assets with progress tracking
     preload.loadManifest(assetsToLoad);
 
-    // Add an event listener for when each asset is loaded
     preload.on('fileload', function (event) {
         const asset = event.item.src;
 
@@ -43,32 +40,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (preloadedVideos.length === assetsToLoad.length - 1) {
-            // All videos are preloaded, hide loading bar and start the game
             loadingBar.style.display = 'none';
             startGame();
         }
     });
 
-    // Function to play video by index
     function playVideoByIndex(index) {
         if (gameOver) {
-            // If the game is over, do not play the video
             return;
         }
 
         const newVideo = preloadedVideos[index];
-        videoPlayerContainer.innerHTML = ''; // Clear container
+        videoPlayerContainer.innerHTML = '';
         videoPlayerContainer.appendChild(newVideo);
-
-        // Add the 'playsinline' attribute for mobile devices
         newVideo.setAttribute('playsinline', '');
-
-        // Set the current time in the video to match the audio start time
         newVideo.currentTime = 0;
 
-        // Add an event listener for when the video ends
         newVideo.addEventListener('ended', function () {
-            // Start the video over from the beginning
             newVideo.currentTime = 0;
             newVideo.play().catch(error => {
                 console.error('Video playback error:', error.message);
@@ -79,114 +67,95 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Video playback error:', error.message);
         });
 
-        // Preload the next video while the current video is playing
         preloadNextVideo();
     }
 
-    // Function to preload the next video in the array
     function preloadNextVideo() {
         const nextIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         const nextVideo = preloadedVideos[nextIndex];
 
         if (!nextVideo.hasAttribute('src')) {
-            // Set the 'src' attribute to trigger preload
             nextVideo.src = preloadedVideos[nextIndex].src;
         }
     }
 
     document.addEventListener('click', function () {
-        // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-
-        // Set the audio start time to match the current time in the current video
         const audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
-
-        // Preload the next video
         preloadNextVideo();
 
-        // Start audio playback if not already playing
         if (!audioPlaying) {
-            // Use createjs.Sound.play with configuration to get the HTMLMediaElement
             createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
             const tranAudio = createjs.Sound.play('tranAudio', { interrupt: createjs.Sound.INTERRUPT_EARLY, volume: 1 });
             audioPlaying = true;
 
-            // Create a shared audio context if not already created
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
 
-            // Connect tranAudio to the shared audio context
+            const gainNode = audioContext.createGain();
+            gainNode.gain.setValueAtTime(1, audioContext.currentTime);
+            gainNode.connect(audioContext.destination);
+
             const audioSource = audioContext.createMediaElementSource(tranAudio);
-            audioSource.connect(audioContext.destination);
+            audioSource.connect(gainNode);
 
             loadingScreen.style.display = 'none';
 
-            // Add an event listener for when tranAudio finishes
             tranAudio.addEventListener('complete', function () {
-                // End the game when tranAudio finishes
-                // You can add your logic here to handle the end of the game
                 console.log('Game over!');
                 gameOver = true;
 
-                // Display "Game Over" message on the screen
                 const gameOverMessage = document.createElement('div');
                 gameOverMessage.textContent = 'Coming Soon..';
-                gameOverMessage.style.fontSize = '75px'; // Adjust styling as needed
-                gameOverMessage.style.fontFamily = 'Futura, sans-serif'; // Adjust font family as needed
-                gameOverMessage.style.fontWeight = 'bold'; // Adjust font weight as needed
-                gameOverMessage.style.color = '#eab5ac'; // Adjust font color as needed
-                gameOverMessage.style.textAlign = 'center'; // Center-align the text
-                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)'; // Add a simple text shadow
+                gameOverMessage.style.fontSize = '75px';
+                gameOverMessage.style.fontFamily = 'Futura, sans-serif';
+                gameOverMessage.style.fontWeight = 'bold';
+                gameOverMessage.style.color = '#eab5ac';
+                gameOverMessage.style.textAlign = 'center';
+                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)';
                 gameOverMessage.style.position = 'absolute';
                 gameOverMessage.style.top = '50%';
                 gameOverMessage.style.left = '50%';
                 gameOverMessage.style.transform = 'translate(-50%, -50%)';
-                gameOverMessage.style.zIndex = '1000'; // Set the z-index to a high value
+                gameOverMessage.style.zIndex = '1000';
                 document.body.appendChild(gameOverMessage);
             });
         }
 
-        // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
 
-        // Create a shared video audio context if not already created
         if (!tranVideoAudioContext) {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
 
-        // Connect tranVideo to the shared audio context
-        const videoSource = tranVideoAudioContext.createMediaElementSource(tranVideo);
-        videoSource.connect(tranVideoAudioContext.destination);
+        const gainNode = tranVideoAudioContext.createGain();
+        gainNode.gain.setValueAtTime(1, tranVideoAudioContext.currentTime);
+        gainNode.connect(tranVideoAudioContext.destination);
 
-        // Add an event listener for when tranVideo finishes
+        const videoSource = tranVideoAudioContext.createMediaElementSource(tranVideo);
+        videoSource.connect(gainNode);
+
         tranVideo.addEventListener('ended', function () {
             tranVideo.style.display = 'none';
         });
 
-        // Add an event listener for when tranVideo finishes loading
         tranVideo.addEventListener('loadeddata', function () {
-            // tranVideo has finished loading, start audio and video playback
             startTranAudio();
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         });
     });
 
-    // Function to start the game
     function startGame() {
-        // Start with the first video in the array
         playVideoByIndex(0);
-
-        // Change loading text to "Click" when the game starts
         loadingText.textContent = 'Click';
     }
 
-    // Function to start tranAudio and resume the audio context if needed
     function startTranAudio() {
         if (tranVideoAudioContext && tranVideoAudioContext.state !== 'running') {
             tranVideoAudioContext.resume().then(() => {
-                // You can add any additional logic here if needed
+                // Additional logic can be added if needed
             });
         }
     }
