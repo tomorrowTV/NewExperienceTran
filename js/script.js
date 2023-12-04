@@ -207,4 +207,3 @@ document.addEventListener('DOMContentLoaded', function () {
             tranVideo.style.display = 'none';
         });
     }
-}
