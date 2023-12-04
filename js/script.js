@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const tranAudio = createjs.Sound.play('tranAudio');
             audioPlaying = true;
 
+            console.log('tranAudio:', tranAudio);
+            console.log('Type of tranAudio:', typeof tranAudio);
+
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
