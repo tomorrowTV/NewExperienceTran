@@ -22,12 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'wwwroot/videos/SW4.mp4',
         'wwwroot/videos/SW5.mp4',
         'wwwroot/videos/SW6.mp4',
-        'wwwroot/videos/SW7.mp4',
-        'wwwroot/videos/SW8.mp4',
-        'wwwroot/videos/SW9.mp4',
-        'wwwroot/videos/SW10.mp4',
-        'wwwroot/videos/SW11.mp4',
-        'wwwroot/videos/SW12.mp4',
         // Add more assets as needed
     ];
 
