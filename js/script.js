@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
+    let audioReady = false;
     let tranVideoAudioContext;
     const preloadedVideos = [];
     let gameOver = false; // New flag to track the game state
@@ -144,6 +145,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 gameOverMessage.style.transform = 'translate(-50%, -50%)';
                 gameOverMessage.style.zIndex = '1000'; // Set the z-index to a high value
                 document.body.appendChild(gameOverMessage);
+
+                // Suggested modification 1: Use a promise to ensure audio is ready
+                const audioPromise = new Promise((resolve, reject) => {
+                    resolve(); // You may add more logic if needed
+                });
+
+                // Suggested modification 2: Start tranVideo when both audio and video are ready
+                Promise.all([audioPromise, tranVideoReadyPromise()]).then(() => {
+                    startTranVideo();
+                });
             });
         }
         
