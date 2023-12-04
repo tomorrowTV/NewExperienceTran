@@ -2,16 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
-    const loadingText = document.getElementById('loadingText'); // Add this line to get the loading text element
+    const loadingText = document.getElementById('loadingText');
 
     let currentVideoIndex = 0;
-    let videoPlaying = false;
-    let audioPlaying = false;
-    let audioStartTime = 0;
-    let audioContext;
-    let tranVideoAudioContext;
-    const preloadedVideos = [];
-    let gameOver = false; // New flag to track the game state
+    let preloadedVideos = [];
+    let gameOver = false;
+    let userClicked = false;
 
     // Define assets to preload
     const assetsToLoad = [
@@ -42,6 +38,14 @@ document.addEventListener('DOMContentLoaded', function () {
             videoElement.preload = 'auto';
             videoElement.setAttribute('playsinline', '');
             preloadedVideos.push(videoElement);
+
+            // Add an event listener for the 'canplay' event to ensure the video is ready to play
+            videoElement.addEventListener('canplay', function () {
+                if (userClicked) {
+                    // If the user has clicked, start both audio and video
+                    startAudioAndVideo();
+                }
+            });
         }
 
         if (preloadedVideos.length === assetsToLoad.length - 1) {
@@ -65,10 +69,16 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add the 'playsinline' attribute for mobile devices
         newVideo.setAttribute('playsinline', '');
 
-        // Set the current time in the video to match the audio start time
-        newVideo.currentTime = audioStartTime;
+        // Add an event listener for the 'canplay' event to ensure the video is ready to play
+        newVideo.addEventListener('canplay', function () {
+            if (userClicked) {
+                // If the user has clicked, start both audio and video
+                startAudioAndVideo();
+            }
+        });
 
-        console.log('Before play: audioStartTime =', audioStartTime);
+        // Set the current time in the video to match the audio start time
+        newVideo.currentTime = 0;
 
         // Add an event listener for when the video ends
         newVideo.addEventListener('ended', function () {
@@ -79,14 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        newVideo.play().catch(error => {
-            console.error('Video playback error:', error.message);
-        });
-
         // Preload the next video while the current video is playing
         preloadNextVideo();
-
-        console.log('After play');
     }
 
     // Function to preload the next video in the array
@@ -102,9 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
-
         // Set the audio start time to match the current time in the current video
-        audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
+        const audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
         // Preload the next video
         preloadNextVideo();
@@ -113,11 +116,17 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
+        // Start audio and video playback simultaneously
+        startAudioAndVideo();
+    });
+
+    // Function to start audio and video playback
+    function startAudioAndVideo() {
         // Start audio playback if not already playing
-        if (!audioPlaying) {
+        if (!gameOver && !userClicked) {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
             const tranAudio = createjs.Sound.play('tranAudio');
-            audioPlaying = true;
+            userClicked = true;
 
             // Hide the loading screen when video starts playing
             loadingScreen.style.display = 'none';
@@ -125,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // Add an event listener for when tranAudio finishes
             tranAudio.addEventListener('complete', function () {
                 // End the game when tranAudio finishes
-                // You can add your logic here to handle the end of the game
                 console.log('Game over!');
                 gameOver = true;
 
@@ -151,22 +159,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
 
-        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
-            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-            tranVideoAudioContext.resume().then(() => {
-                startTranAudio(tranVideo, tranVideoAudioContext);
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            startTranAudio(tranVideo, tranVideoAudioContext);
+        if (tranVideo.readyState >= 2) {
+            // If the video is ready to play, start it
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
-
-        // Add an event listener for when tranVideo finishes
-        tranVideo.addEventListener('ended', function () {
-            tranVideo.style.display = 'none';
-        });
-    });
+    }
 
     // Function to start the game
     function startGame() {
@@ -175,18 +172,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Change loading text to "Click" when the game starts
         loadingText.textContent = 'Click';
-    }
-
-    // Function to start tranAudio
-    function startTranAudio(mediaElement, context) {
-        if (context && context.state !== 'running') {
-            context.resume().then(() => {
-                // Connect mediaElement to the audio context
-                const source = context.createMediaElementSource(mediaElement);
-                source.connect(context.destination);
-
-                // Additional logic can be added if needed
-            });
-        }
     }
 });
