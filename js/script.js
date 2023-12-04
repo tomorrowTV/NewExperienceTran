@@ -95,12 +95,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const tranAudio = createjs.Sound.play('tranAudio');
             audioPlaying = true;
 
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            if (!tranVideoAudioContext) {
+                tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
 
-            const audioSource = audioContext.createMediaElementSource(tranAudio);
-            audioSource.connect(audioContext.destination);
+            const audioSource = tranVideoAudioContext.createMediaElementSource(tranAudio);
+            audioSource.connect(tranVideoAudioContext.destination);
 
             loadingScreen.style.display = 'none';
 
@@ -128,33 +128,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
 
-        if (!tranVideoAudioContext) {
+        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            tranVideoAudioContext.resume().then(() => {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+            });
+        } else {
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
-
-        const videoSource = tranVideoAudioContext.createMediaElementSource(tranVideo);
-        videoSource.connect(tranVideoAudioContext.destination);
 
         tranVideo.addEventListener('ended', function () {
             tranVideo.style.display = 'none';
-        });
-
-        tranVideo.addEventListener('loadeddata', function () {
-            startTranAudio();
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         });
     });
 
     function startGame() {
         playVideoByIndex(0);
         loadingText.textContent = 'Click';
-    }
-
-    function startTranAudio() {
-        if (tranVideoAudioContext && tranVideoAudioContext.state !== 'running') {
-            tranVideoAudioContext.resume().then(() => {
-                // You can add any additional logic here if needed
-            });
-        }
     }
 });
