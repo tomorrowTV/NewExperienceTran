@@ -115,79 +115,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Start audio playback if not already playing
         if (!audioPlaying) {
-            const audioPromise = new Promise((resolve, reject) => {
-                createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
-                const tranAudio = createjs.Sound.play('tranAudio');
-                audioPlaying = true;
+            createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
+            const tranAudio = createjs.Sound.play('tranAudio');
+            audioPlaying = true;
 
-                // Hide the loading screen when video starts playing
-                loadingScreen.style.display = 'none';
+            // Hide the loading screen when video starts playing
+            loadingScreen.style.display = 'none';
 
-                // Add an event listener for when tranAudio finishes
-                tranAudio.addEventListener('complete', function () {
-                    // End the game when tranAudio finishes
-                    // You can add your logic here to handle the end of the game
-                    console.log('Game over!');
-                    gameOver = true;
+            // Add an event listener for when tranAudio finishes
+            tranAudio.addEventListener('complete', function () {
+                // End the game when tranAudio finishes
+                // You can add your logic here to handle the end of the game
+                console.log('Game over!');
+                gameOver = true;
 
-                    // Display "Game Over" message on the screen
-                    const gameOverMessage = document.createElement('div');
-                    gameOverMessage.textContent = 'Coming Soon..';
-                    gameOverMessage.style.fontSize = '75px'; // Adjust styling as needed
-                    gameOverMessage.style.fontFamily = 'Futura, sans-serif'; // Adjust font family as needed
-                    gameOverMessage.style.fontWeight = 'bold'; // Adjust font weight as needed
-                    gameOverMessage.style.color = '#eab5ac'; // Adjust font color as needed
-                    gameOverMessage.style.textAlign = 'center'; // Center-align the text
-                    gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)'; // Add a simple text shadow
-                    gameOverMessage.style.position = 'absolute';
-                    gameOverMessage.style.top = '50%';
-                    gameOverMessage.style.left = '50%';
-                    gameOverMessage.style.transform = 'translate(-50%, -50%)';
-                    gameOverMessage.style.zIndex = '1000'; // Set the z-index to a high value
-                    document.body.appendChild(gameOverMessage);
-
-                    resolve();
-                });
-            });
-
-            const videoPromise = new Promise((resolve, reject) => {
-                const tranVideo = document.getElementById('tranVideo');
-                tranVideo.muted = true;
-
-                const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-                tranVideo.addEventListener('ended', function () {
-                    tranVideo.style.display = 'none';
-                    resolve();
-                });
-
-                tranVideoAudioContext.resume().then(() => {
-                    tranVideo.play().catch(error => {
-                        console.error('tranVideo playback error:', error.message);
-                        reject(new Error('Video playback failed.'));
-                    });
-                });
-            });
-
-            Promise.all([audioPromise, videoPromise]).then(() => {
-                startTranVideo();
-            }).catch(error => {
-                console.error('Error starting audio or video:', error.message);
+                // Display "Game Over" message on the screen
+                const gameOverMessage = document.createElement('div');
+                gameOverMessage.textContent = 'Coming Soon..';
+                gameOverMessage.style.fontSize = '75px'; // Adjust styling as needed
+                gameOverMessage.style.fontFamily = 'Futura, sans-serif'; // Adjust font family as needed
+                gameOverMessage.style.fontWeight = 'bold'; // Adjust font weight as needed
+                gameOverMessage.style.color = '#eab5ac'; // Adjust font color as needed
+                gameOverMessage.style.textAlign = 'center'; // Center-align the text
+                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)'; // Add a simple text shadow
+                gameOverMessage.style.position = 'absolute';
+                gameOverMessage.style.top = '50%';
+                gameOverMessage.style.left = '50%';
+                gameOverMessage.style.transform = 'translate(-50%, -50%)';
+                gameOverMessage.style.zIndex = '1000'; // Set the z-index to a high value
+                document.body.appendChild(gameOverMessage);
             });
         }
-    });
-
-    // Function to start the game
-    function startGame() {
-        // Start with the first video in the array
-        playVideoByIndex(0);
-
-        // Change loading text to "Click" when the game starts
-        loadingText.textContent = 'Click';
-    }
-
-    // Suggested modification: Function to start tranVideo
-    function startTranVideo() {
         
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
@@ -206,6 +164,14 @@ document.addEventListener('DOMContentLoaded', function () {
         tranVideo.addEventListener('ended', function () {
             tranVideo.style.display = 'none';
         });
+    });
+
+    // Function to start the game
+    function startGame() {
+        // Start with the first video in the array
+        playVideoByIndex(0);
+
+        // Change loading text to "Click" when the game starts
+        loadingText.textContent = 'Click';
     }
-    
 });
