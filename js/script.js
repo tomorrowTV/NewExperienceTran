@@ -109,16 +109,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!audioPlaying) {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
-            const tranAudio = createjs.Sound.play('tranAudio');
+            const tranAudio = createjs.Sound.play('tranAudio', { interrupt: createjs.Sound.INTERRUPT_EARLY, volume: 1 });
             audioPlaying = true;
-
-            console.log('tranAudio:', tranAudio);
-            console.log('Type of tranAudio:', typeof tranAudio);
 
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
-
+            
+            // Connect tranAudio to the shared audio context
             const audioSource = audioContext.createMediaElementSource(tranAudio);
             audioSource.connect(audioContext.destination);
 
