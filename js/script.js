@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
             videoElement.src = asset;
             videoElement.preload = 'auto';
             videoElement.setAttribute('playsinline', '');
+            videoElement.style.display = 'none'; // Hide the video initially
+            document.body.appendChild(videoElement); // Append to the body to ensure proper playback on some browsers
             preloadedVideos.push(videoElement);
         }
 
@@ -66,8 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Set the current time in the video to match the audio start time
         newVideo.currentTime = audioStartTime;
-
-        console.log('Before play: audioStartTime =', audioStartTime);
 
         // Add an event listener for when the video ends
         newVideo.addEventListener('ended', function () {
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        const tranVideo = document.getElementById('tranVideo');
+        const tranVideo = preloadedVideos[currentVideoIndex];
         tranVideo.muted = true;
 
         if (!tranVideoAudioContext) {
