@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let videoPlaying = false;
     let audioPlaying = false;
     let audioStartTime = 0;
+    let audioContext;
     let tranVideoAudioContext;
     const preloadedVideos = [];
     let gameOver = false; // New flag to track the game state
@@ -101,83 +102,76 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.addEventListener('click', function () {
-
-        // Set the audio start time to match the current time in the current video
         audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
-
-        // Preload the next video
         preloadNextVideo();
-
-        // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Start audio playback if not already playing
         if (!audioPlaying) {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
             const tranAudio = createjs.Sound.play('tranAudio');
             audioPlaying = true;
 
-            // Hide the loading screen when video starts playing
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            const audioSource = audioContext.createMediaElementSource(tranAudio);
+            audioSource.connect(audioContext.destination);
+
             loadingScreen.style.display = 'none';
 
-            // Add an event listener for when tranAudio finishes
             tranAudio.addEventListener('complete', function () {
-                // End the game when tranAudio finishes
-                // You can add your logic here to handle the end of the game
                 console.log('Game over!');
                 gameOver = true;
 
-                // Display "Game Over" message on the screen
                 const gameOverMessage = document.createElement('div');
                 gameOverMessage.textContent = 'Coming Soon..';
-                gameOverMessage.style.fontSize = '75px'; // Adjust styling as needed
-                gameOverMessage.style.fontFamily = 'Futura, sans-serif'; // Adjust font family as needed
-                gameOverMessage.style.fontWeight = 'bold'; // Adjust font weight as needed
-                gameOverMessage.style.color = '#eab5ac'; // Adjust font color as needed
-                gameOverMessage.style.textAlign = 'center'; // Center-align the text
-                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)'; // Add a simple text shadow
+                gameOverMessage.style.fontSize = '75px';
+                gameOverMessage.style.fontFamily = 'Futura, sans-serif';
+                gameOverMessage.style.fontWeight = 'bold';
+                gameOverMessage.style.color = '#eab5ac';
+                gameOverMessage.style.textAlign = 'center';
+                gameOverMessage.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.7)';
                 gameOverMessage.style.position = 'absolute';
                 gameOverMessage.style.top = '50%';
                 gameOverMessage.style.left = '50%';
                 gameOverMessage.style.transform = 'translate(-50%, -50%)';
-                gameOverMessage.style.zIndex = '1000'; // Set the z-index to a high value
+                gameOverMessage.style.zIndex = '1000';
                 document.body.appendChild(gameOverMessage);
             });
         }
 
-        // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
 
-        const tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-        // Add an event listener for when tranVideo finishes loading
-        tranVideo.addEventListener('loadeddata', function () {
-            // tranVideo has finished loading, start audio playback
-            startTranAudio();
-        });
-
-        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
-        } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        if (!tranVideoAudioContext) {
+            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
         }
 
-        // Add an event listener for when tranVideo finishes
+        const videoSource = tranVideoAudioContext.createMediaElementSource(tranVideo);
+        videoSource.connect(tranVideoAudioContext.destination);
+
         tranVideo.addEventListener('ended', function () {
             tranVideo.style.display = 'none';
         });
+
+        tranVideo.addEventListener('loadeddata', function () {
+            startTranAudio();
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+        });
     });
 
-    // Function to start the game
     function startGame() {
-        // Start with the first video in the array
         playVideoByIndex(0);
-
-        // Change loading text to "Click" when the game starts
         loadingText.textContent = 'Click';
+    }
+
+    function startTranAudio() {
+        if (tranVideoAudioContext && tranVideoAudioContext.state !== 'running') {
+            tranVideoAudioContext.resume().then(() => {
+                // You can add any additional logic here if needed
+            });
+        }
     }
 });
