@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
+        tranVideo.autoplay = true;
 
         if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
