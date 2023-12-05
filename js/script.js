@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let gameOver = false;
     let userClicked = false;
     let tranAudioTimecode = 0; // Shared variable to store tranAudio timecode
+    let tranVideoStarted = false; // Flag to track whether tranVideo has started
 
     // Define assets to preload
     const assetsToLoad = [
@@ -160,8 +161,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
 
-        if (tranVideo.readyState >= 2) {
-            // If the video is ready to play, start it
+        if (!tranVideoStarted) {
+            // Start tranVideo only if it hasn't started yet
+            tranVideoStarted = true;
             tranVideo.currentTime = tranAudioTimecode; // Set tranVideo time to tranAudio timecode
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
