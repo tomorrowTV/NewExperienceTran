@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let preloadedVideos = [];
     let gameOver = false;
     let userClicked = false;
-    let tranAudioTimecode = 0; // Shared variable to store tranAudio timecode
-    let tranVideoStarted = false; // Flag to track whether tranVideo has started
+    let tranAudioStartTime = 0;
+    let tranVideoStarted = false;
 
     // Define assets to preload
     const assetsToLoad = [
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Set the current time in the video to match the audio start time
-        newVideo.currentTime = tranAudioTimecode;
+        newVideo.currentTime = tranAudioStartTime;
 
         // Add an event listener for when the video ends
         newVideo.addEventListener('ended', function () {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add an event listener for user clicks to switch videos
     document.addEventListener('click', function () {
         // Set the audio start time to match the current time in the current video
-        tranAudioTimecode = preloadedVideos[currentVideoIndex].currentTime;
+        tranAudioStartTime = preloadedVideos[currentVideoIndex].currentTime;
 
         // Preload the next video
         preloadNextVideo();
@@ -118,14 +118,8 @@ document.addEventListener('DOMContentLoaded', function () {
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
         playVideoByIndex(currentVideoIndex);
 
-        // Start audio and video playback simultaneously
-        startAudioAndVideo();
-    });
-
-    // Function to start audio and video playback
-    function startAudioAndVideo() {
         // Start audio playback if not already playing
-        if (!gameOver && !userClicked) {
+        if (!userClicked) {
             createjs.Sound.registerSound({ src: 'wwwroot/assets/tranAudio.m4a', id: 'tranAudio' });
             const tranAudio = createjs.Sound.play('tranAudio');
             userClicked = true;
@@ -164,10 +158,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!tranVideoStarted) {
             // Start tranVideo only if it hasn't started yet
             tranVideoStarted = true;
-            tranVideo.currentTime = tranAudioTimecode; // Set tranVideo time to tranAudio timecode
+
+            // Calculate the delay between tranAudio and tranVideo
+            const tranVideoDelay = tranAudioStartTime - tranVideo.currentTime;
+
+            // Adjust tranVideo's start time to synchronize with tranAudio
+            tranVideo.currentTime = tranAudioStartTime;
+
+            // Play tranVideo with adjusted start time
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
-    }
+    });
 
     // Function to start the game
     function startGame() {
