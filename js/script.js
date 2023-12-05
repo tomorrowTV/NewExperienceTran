@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Add an event listener for user clicks to switch videos
-    document.addEventListener('click', function () {
+    document.addEventListener('click', async function () {
 
         // Set the audio start time to match the current time in the current video
         audioStartTime = preloadedVideos[currentVideoIndex].currentTime;
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Switch to the next video
         currentVideoIndex = (currentVideoIndex + 1) % preloadedVideos.length;
-        playVideoByIndex(currentVideoIndex);
+        await playVideoByIndexAsync(currentVideoIndex);
 
         // Start audio playback if not already playing
         if (!audioPlaying) {
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.body.appendChild(gameOverMessage);
             });
         }
-        
+
         // Start tranVideo when the loading screen disappears
         const tranVideo = document.getElementById('tranVideo');
         tranVideo.muted = true;
@@ -154,11 +154,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
             tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-            tranVideoAudioContext.resume().then(() => {
-                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-            });
+            await tranVideoAudioContext.resume();
+            await tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         } else {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
+            await tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
 
         // Add an event listener for when tranVideo finishes
@@ -166,6 +165,51 @@ document.addEventListener('DOMContentLoaded', function () {
             tranVideo.style.display = 'none';
         });
     });
+
+    // Define the async function to play video by index
+    async function playVideoByIndexAsync(index) {
+        return new Promise(resolve => {
+            if (gameOver) {
+                // If the game is over, do not play the video
+                resolve();
+                return;
+            }
+
+            const newVideo = preloadedVideos[index];
+            videoPlayerContainer.innerHTML = ''; // Clear container
+            videoPlayerContainer.appendChild(newVideo);
+
+            // Add the 'playsinline' attribute for mobile devices
+            newVideo.setAttribute('playsinline', '');
+
+            // Set the current time in the video to match the audio start time
+            newVideo.currentTime = audioStartTime;
+
+            console.log('Before play: audioStartTime =', audioStartTime);
+
+            // Add an event listener for when the video ends
+            newVideo.addEventListener('ended', function () {
+                // Start the video over from the beginning
+                newVideo.currentTime = 0;
+                newVideo.play().catch(error => {
+                    console.error('Video playback error:', error.message);
+                });
+            });
+
+            newVideo.play().catch(error => {
+                console.error('Video playback error:', error.message);
+            });
+
+            // Preload the next video while the current video is playing
+            preloadNextVideo();
+
+            console.log('After play');
+
+            // Resolve the promise once the video starts playing
+            newVideo.addEventListener('playing', () => resolve());
+        });
+    }
+
 
     // Function to start the game
     function startGame() {
