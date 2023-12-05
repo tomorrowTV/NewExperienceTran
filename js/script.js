@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tranVideoStarted = true;
 
                 // Set the start time within tranVideo (1 second mark)
-                const tranVideoStartTime = 0; // Set the desired start time
+                const tranVideoStartTime = 1; // Set the desired start time
                 tranVideo.currentTime = tranVideoStartTime;
 
                 // Play tranVideo with adjusted start time
