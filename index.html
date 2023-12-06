@@ -25,7 +25,7 @@
 
     <div id="videoPlayerContainer"></div>
     
-    <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay="false"></video>
+    <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay></video>
 
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
     
@@ -67,6 +67,12 @@
             // Change loading text to "Click" when the game starts
             document.getElementById("loadingText").textContent = "Click";
         });
+
+        // Automatically pause tranVideo after a millisecond
+        setTimeout(function () {
+            const tranVideo = document.getElementById('tranVideo');
+            tranVideo.pause();
+        }, 1);
     </script>
 </body>
 </html>
