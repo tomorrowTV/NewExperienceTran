@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
+    const tranVideo = document.getElementById('tranVideo');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
     const loadingText = document.getElementById('loadingText'); // Add this line to get the loading text element
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
     let currentVideoIndex = 0;
     let videoPlaying = false;
@@ -153,16 +153,13 @@ document.addEventListener('DOMContentLoaded', function () {
         tranVideo.muted = true;
         tranVideo.autoplay = true;
 
-        // Ensure playback only starts after a user action
-        const playPromise = tranVideo.play();
-
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
-                // Autoplay started successfully
-            }).catch(error => {
-                // Autoplay failed; user gesture required
-                console.error('tranVideo playback error:', error.message);
+        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
+            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            tranVideoAudioContext.resume().then(() => {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
+        } else {
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
 
         // Add an event listener for when tranVideo finishes
