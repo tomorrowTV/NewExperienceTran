@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
         tranVideo.muted = true;
         tranVideo.autoplay = true;
 
-        if (tranVideoAudioContext && tranVideoAudioContext.state === 'running') {
+        if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
             tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         } else {
             const player = new MediaElementPlayer(tranVideo, {
