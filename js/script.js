@@ -48,6 +48,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // All videos are preloaded, hide loading bar and start the game
             loadingBar.style.display = 'none';
             startGame();
+
+            // Automatically pause tranVideo after a millisecond
+            setTimeout(function () {
+                tranVideo.pause();
+            }, 1);
         }
     });
 
