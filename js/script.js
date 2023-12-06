@@ -49,9 +49,15 @@ document.addEventListener('DOMContentLoaded', function () {
             loadingBar.style.display = 'none';
             startGame();
 
-            // Automatically pause tranVideo after a millisecond
             setTimeout(function () {
-                tranVideo.pause();
+                tranVideo.play().catch(error => {
+                    console.error('tranVideo playback error:', error.message);
+                });
+
+                // Automatically pause tranVideo after a millisecond
+                setTimeout(function () {
+                    tranVideo.pause();
+                }, 1);
             }, 1);
         }
     });
