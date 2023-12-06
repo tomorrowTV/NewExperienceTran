@@ -153,16 +153,12 @@ document.addEventListener('DOMContentLoaded', function () {
         tranVideo.autoplay = true;
 
         if (!tranVideoAudioContext || tranVideoAudioContext.state !== 'running') {
-            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
-        } else {
-            const player = new MediaElementPlayer(tranVideo, {
-                success: function (mediaElement, originalNode) {
-                    mediaElement.play();
-                },
-                error: function (error) {
-                    console.error('MediaElementJS initialization error:', error.message, error);
-                }
+            tranVideoAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            tranVideoAudioContext.resume().then(() => {
+                tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
             });
+        } else {
+            tranVideo.play().catch(error => console.error('tranVideo playback error:', error.message));
         }
 
         // Add an event listener for when tranVideo finishes
