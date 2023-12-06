@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     mediaElement.play();
                 },
                 error: function (error) {
-                    console.error('MediaElementJS initialization error:', error);
+                    console.error('MediaElementJS initialization error:', error.message, error);
                 }
             });
         }
