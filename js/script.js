@@ -3,15 +3,34 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // Add an event listener for the loadeddata event
     tranVideo.addEventListener('loadeddata', function() {
-        // Play the video almost immediately after it starts loading
-        tranVideo.play().catch(error => {
-            console.error('tranVideo playback error:', error.message);
-        });
-        
-        // Pause the video almost immediately after it starts playing
-        setTimeout(function () {
-            tranVideo.pause();
-        }, 100); // Adjust the delay as needed
+        if (tranVideo.readyState >= 2) { // 2 indicates that the video can be played
+            // Play the video almost immediately after it starts loading
+            tranVideo.play().catch(error => {
+                console.error('tranVideo playback error:', error.message);
+            });
+
+            // Pause the video shortly after it starts playing
+            setTimeout(function () {
+                // Check if the video is still playing (might have been interrupted)
+                if (!tranVideo.paused) {
+                    tranVideo.pause();
+                }
+            }, 100); // Adjust the delay as needed
+        } else {
+            // If the video is not ready, wait for the 'canplay' event
+            tranVideo.addEventListener('canplay', function () {
+                tranVideo.play().catch(error => {
+                    console.error('tranVideo playback error:', error.message);
+                });
+
+                // Pause the video shortly after it starts playing
+                setTimeout(function () {
+                    if (!tranVideo.paused) {
+                        tranVideo.pause();
+                    }
+                }, 100); // Adjust the delay as needed
+            });
+        }
     });
     
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
