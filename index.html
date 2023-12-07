@@ -26,6 +26,13 @@
     <div id="videoPlayerContainer"></div>
     
     <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay onplay="pauseVideo()"></video>
+    <script>
+        function pauseVideo() {
+            const tranVideo = document.getElementById('tranVideo');
+            tranVideo.pause();
+            console.log('tranVideo paused successfully');
+        }
+    </script>
 
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
     
