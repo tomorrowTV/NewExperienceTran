@@ -1,12 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () { 
-    function pauseVideo() {
-        const tranVideo = document.getElementById('tranVideo');
-        setTimeout(function () {
-            tranVideo.pause();
-            console.log('tranVideo paused successfully');
-        }, 100); // Adjust the delay as needed
-    }
-
+    const tranVideo = document.getElementById('tranVideo');
     const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
@@ -32,6 +25,17 @@ document.addEventListener('DOMContentLoaded', function () {
         'wwwroot/videos/SW6.mp4',
         // Add more assets as needed
     ];
+
+    // Function to pause video
+    function pauseVideo() {
+        tranVideo.pause();
+        console.log('tranVideo paused successfully');
+    }
+
+    tranVideo.addEventListener('loadeddata', function () {
+        // Pause the video almost immediately after it starts playing
+        setTimeout(pauseVideo, 100);
+    });
 
     const preload = new createjs.LoadQueue();
     preload.setMaxConnections(5);
