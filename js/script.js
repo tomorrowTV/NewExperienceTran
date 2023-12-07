@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () { 
     const tranVideo = document.getElementById('tranVideo');
+    audioPlaying = true;
     tranVideo.muted = true;
     
     // Add an event listener for the loadeddata event
