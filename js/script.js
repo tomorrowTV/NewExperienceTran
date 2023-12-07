@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Remove this line: const tranVideo = document.getElementById('tranVideo');
-    let audioPlaying = true;
     
     const tranVideo = document.getElementById('tranVideo');
     
