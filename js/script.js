@@ -26,17 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add more assets as needed
     ];
 
-    // Function to pause video
-    function pauseVideo() {
-        tranVideo.pause();
-        console.log('tranVideo paused successfully');
-    }
-
-    tranVideo.addEventListener('loadeddata', function () {
-        // Pause the video almost immediately after it starts playing
-        setTimeout(pauseVideo, 100);
-    });
-
     const preload = new createjs.LoadQueue();
     preload.setMaxConnections(5);
 
