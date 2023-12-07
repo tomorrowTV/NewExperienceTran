@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const tranVideo = document.getElementById('tranVideo');
+    
+    // Add an event listener for the loadeddata event
+    tranVideo.addEventListener('loadeddata', function() {
+        // Pause the video almost immediately after it starts playing
+        setTimeout(function () {
+            tranVideo.pause();
+        }, 100); // Adjust the delay as needed
+    });
+    
+    const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
     const loadingText = document.getElementById('loadingText'); // Add this line to get the loading text element
@@ -48,17 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // All videos are preloaded, hide loading bar and start the game
             loadingBar.style.display = 'none';
             startGame();
-
-            setTimeout(function () {
-                tranVideo.play().catch(error => {
-                    console.error('tranVideo playback error:', error.message);
-                });
-
-                // Automatically pause tranVideo after a millisecond
-                setTimeout(function () {
-                    tranVideo.pause();
-                }, 1);
-            }, 1);
         }
     });
 
