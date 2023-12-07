@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const videoPlayerContainer = document.getElementById('videoPlayerContainer');
+document.addEventListener('DOMContentLoaded', function () { 
     const tranVideo = document.getElementById('tranVideo');
+    const videoPlayerContainer = document.getElementById('videoPlayerContainer');
     const loadingBar = document.getElementById('loadingBar');
     const loadingScreen = document.getElementById('loadingBarContainer');
     const loadingText = document.getElementById('loadingText'); // Add this line to get the loading text element
@@ -26,6 +26,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add more assets as needed
     ];
 
+    // Function to pause video
+    function pauseVideo() {
+        tranVideo.pause();
+        console.log('tranVideo paused successfully');
+    }
+
+    tranVideo.addEventListener('loadeddata', function () {
+        // Pause the video almost immediately after it starts playing
+        setTimeout(pauseVideo, 100);
+    });
+
     const preload = new createjs.LoadQueue();
     preload.setMaxConnections(5);
 
@@ -48,17 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
             // All videos are preloaded, hide loading bar and start the game
             loadingBar.style.display = 'none';
             startGame();
-
-            setTimeout(function () {
-                tranVideo.play().catch(error => {
-                    console.error('tranVideo playback error:', error.message);
-                });
-
-                // Automatically pause tranVideo after a millisecond
-                setTimeout(function () {
-                    tranVideo.pause();
-                }, 1);
-            }, 1);
         }
     });
 
