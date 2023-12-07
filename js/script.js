@@ -1,9 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
-    
+document.addEventListener('DOMContentLoaded', function () { 
     const tranVideo = document.getElementById('tranVideo');
     
     // Add an event listener for the loadeddata event
     tranVideo.addEventListener('loadeddata', function() {
+        // Play the video almost immediately after it starts loading
+        tranVideo.play().catch(error => {
+            console.error('tranVideo playback error:', error.message);
+        });
+        
         // Pause the video almost immediately after it starts playing
         setTimeout(function () {
             tranVideo.pause();
