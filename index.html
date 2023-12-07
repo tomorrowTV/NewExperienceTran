@@ -27,11 +27,20 @@
     
     <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay></video>
     <script>
-        function pauseVideo() {
+    // Define a flag to track whether the pauseVideo function has been executed
+    let pauseVideoExecuted = false;
+
+    function pauseVideo() {
+        if (!pauseVideoExecuted) {
             const tranVideo = document.getElementById('tranVideo');
             tranVideo.pause();
             console.log('tranVideo paused successfully');
+            pauseVideoExecuted = true;
         }
+    }
+
+    // Attach the event listener using JavaScript
+    document.getElementById('tranVideo').addEventListener('play', pauseVideo);
     </script>
 
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
