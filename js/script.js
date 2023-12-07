@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Check if the video is still playing (might have been interrupted)
                 if (!tranVideo.paused) {
                     tranVideo.pause();
+                    console.log('tranVideo paused successfully');
                 }
             }, 100); // Adjust the delay as needed
         } else {
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(function () {
                     if (!tranVideo.paused) {
                         tranVideo.pause();
+                        console.log('tranVideo paused successfully');
                     }
                 }, 100); // Adjust the delay as needed
             });
