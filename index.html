@@ -43,7 +43,6 @@
     document.getElementById('tranVideo').addEventListener('play', pauseVideo);
 
     // Set up flags for each video to ensure autoplay and pause only happens once
-    let tranVideoAutoplayed = false;
     let video1Autoplayed = false;
     let video2Autoplayed = false;
     let video3Autoplayed = false;
@@ -52,7 +51,6 @@
     let video6Autoplayed = false;
 
     document.addEventListener('DOMContentLoaded', function () {
-        const tranVideo = document.getElementById('tranVideo');
         const video1 = document.getElementById('video1');
         const video2 = document.getElementById('video2');
         const video3 = document.getElementById('video3');
@@ -61,13 +59,6 @@
         const video6 = document.getElementById('video6');
 
         // Add oncanplay event listeners for each video
-        tranVideo.addEventListener('canplay', function () {
-            if (!tranVideoAutoplayed) {
-                pauseVideo('tranVideo');
-                tranVideoAutoplayed = true;
-            }
-        });
-
         video1.addEventListener('canplay', function () {
             if (!video1Autoplayed) {
                 pauseVideo('video1');
