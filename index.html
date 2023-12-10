@@ -84,5 +84,32 @@
             document.getElementById("loadingText").textContent = "Click";
         });
     </script>
+
+    <!-- Set up flags for each video to ensure autoplay and pause only happens once -->
+    <script>
+        let tranVideoAutoplayed = false;
+        let video1Autoplayed = false;
+        let video2Autoplayed = false;
+        let video3Autoplayed = false;
+        let video4Autoplayed = false;
+        let video5Autoplayed = false;
+        let video6Autoplayed = false;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const videos = ['video1', 'video2', 'video3', 'video4', 'video5', 'video6'];
+
+            videos.forEach(function (videoId) {
+                const videoElement = document.getElementById(videoId);
+                if (videoElement) {
+                    videoElement.addEventListener('canplay', function () {
+                        if (!eval(`${videoId}Autoplayed`)) {
+                            pauseVideo(videoId);
+                            eval(`${videoId}Autoplayed = true`);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
