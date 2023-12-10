@@ -51,58 +51,68 @@
     let video6Autoplayed = false;
 
     document.addEventListener('DOMContentLoaded', function () {
-        const video1 = document.getElementById('video1');
-        const video2 = document.getElementById('video2');
-        const video3 = document.getElementById('video3');
-        const video4 = document.getElementById('video4');
-        const video5 = document.getElementById('video5');
-        const video6 = document.getElementById('video6');
-
-        // Add oncanplay event listeners for each video
-        video1.addEventListener('canplay', function () {
-            if (!video1Autoplayed) {
-                pauseVideo('video1');
-                video1Autoplayed = true;
+        // Add oncanplay event listeners for each video (except tranVideo)
+            const video1 = document.getElementById('video1');
+            if (video1) {
+                video1.addEventListener('canplay', function () {
+                    if (!video1Autoplayed) {
+                        pauseVideo('video1');
+                        video1Autoplayed = true;
+                    }
+                });
             }
-        });
 
-        video2.addEventListener('canplay', function () {
-            if (!video2Autoplayed) {
-                pauseVideo('video2');
-                video2Autoplayed = true;
+            const video2 = document.getElementById('video2');
+            if (video2) {
+                video2.addEventListener('canplay', function () {
+                    if (!video2Autoplayed) {
+                        pauseVideo('video2');
+                        video2Autoplayed = true;
+                    }
+                });
             }
-        });
 
-        video3.addEventListener('canplay', function () {
-            if (!video3Autoplayed) {
-                pauseVideo('video3');
-                video3Autoplayed = true;
+            const video3 = document.getElementById('video3');
+            if (video3) {
+                video3.addEventListener('canplay', function () {
+                    if (!video3Autoplayed) {
+                        pauseVideo('video3');
+                        video3Autoplayed = true;
+                    }
+                });
             }
-        });
 
-        video4.addEventListener('canplay', function () {
-            if (!video4Autoplayed) {
-                pauseVideo('video4');
-                video4Autoplayed = true;
+            const video4 = document.getElementById('video4');
+            if (video4) {
+                video4.addEventListener('canplay', function () {
+                    if (!video4Autoplayed) {
+                        pauseVideo('video4');
+                        video4Autoplayed = true;
+                    }
+                });
             }
-        });
 
-        video5.addEventListener('canplay', function () {
-            if (!video5Autoplayed) {
-                pauseVideo('video5');
-                video5Autoplayed = true;
+            const video5 = document.getElementById('video5');
+            if (video5) {
+                video5.addEventListener('canplay', function () {
+                    if (!video5Autoplayed) {
+                        pauseVideo('video5');
+                        video5Autoplayed = true;
+                    }
+                });
             }
-        });
 
-        video6.addEventListener('canplay', function () {
-            if (!video6Autoplayed) {
-                pauseVideo('video6');
-                video6Autoplayed = true;
+            const video6 = document.getElementById('video6');
+            if (video6) {
+                video6.addEventListener('canplay', function () {
+                    if (!video6Autoplayed) {
+                        pauseVideo('video6');
+                        video6Autoplayed = true;
+                    }
+                });
             }
-        });
 
-        // ... (the rest of your existing script) ...
-    });
+        });
     </script>
 
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
