@@ -69,7 +69,7 @@
 
             // Play and pause tranVideo
             const tranVideo = document.getElementById('tranVideo');
-            tranVideo.addEventListener('loadedmetadata', function () {
+            tranVideo.addEventListener('canplaythrough', function () {
                 tranVideo.play().then(() => tranVideo.pause());
                 console.log('tranVideo played and paused successfully');
             });
@@ -79,7 +79,7 @@
             videoIds.forEach(function (videoId) {
                 const videoElement = document.getElementById(videoId);
                 if (videoElement) {
-                    videoElement.addEventListener('loadedmetadata', function () {
+                    videoElement.addEventListener('canplaythrough', function () {
                         videoElement.play().then(() => videoElement.pause());
                         console.log(`${videoId} played and paused successfully`);
                     });
