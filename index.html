@@ -78,9 +78,11 @@
             videoIds.forEach(function (videoId) {
                 const videoElement = document.getElementById(videoId);
                 if (videoElement) {
-                    videoElement.play();
-                    videoElement.pause();
-                    console.log(`${videoId} played and paused successfully`);
+                    videoElement.addEventListener('loadedmetadata', function () {
+                        videoElement.play();
+                        videoElement.pause();
+                        console.log(`${videoId} played and paused successfully`);
+                    });
                 }
             });
         });
