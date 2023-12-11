@@ -26,12 +26,12 @@
     <div id="videoPlayerContainer"></div>
     
     <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay></video>
-    <video id="video1" src="wwwroot/videos/SW1.mp4"></video>
-    <video id="video2" src="wwwroot/videos/SW2.mp4"></video>
-    <video id="video3" src="wwwroot/videos/SW3.mp4"></video>
-    <video id="video4" src="wwwroot/videos/SW4.mp4"></video>
-    <video id="video5" src="wwwroot/videos/SW5.mp4"></video>
-    <video id="video6" src="wwwroot/videos/SW6.mp4"></video>
+    <video id="video1" src="wwwroot/videos/SW1.mp4" playsinline></video>
+    <video id="video2" src="wwwroot/videos/SW2.mp4" playsinline></video>
+    <video id="video3" src="wwwroot/videos/SW3.mp4" playsinline></video>
+    <video id="video4" src="wwwroot/videos/SW4.mp4" playsinline></video>
+    <video id="video5" src="wwwroot/videos/SW5.mp4" playsinline></video>
+    <video id="video6" src="wwwroot/videos/SW6.mp4" playsinline></video>
     
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
     
@@ -78,10 +78,8 @@
             const videoElement = document.getElementById(videoId);
             
             if (videoElement) {
-                videoElement.addEventListener('canplay', function () {
-                    videoElement.pause();
-                    console.log(`${videoId} paused successfully`);
-                });
+                videoElement.pause();
+                console.log(`${videoId} paused successfully`);
             }
         });
     });
