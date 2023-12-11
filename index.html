@@ -26,51 +26,129 @@
     <div id="videoPlayerContainer"></div>
     
     <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay></video>
-
-    <!-- Other videos with their respective IDs -->
-    <video id="video1" src="wwwroot/videos/SW1.mp4" playsinline></video>
-    <video id="video2" src="wwwroot/videos/SW2.mp4" playsinline></video>
-    <video id="video3" src="wwwroot/videos/SW3.mp4" playsinline></video>
-    <video id="video4" src="wwwroot/videos/SW4.mp4" playsinline></video>
-    <video id="video5" src="wwwroot/videos/SW5.mp4" playsinline></video>
-    <video id="video6" src="wwwroot/videos/SW6.mp4" playsinline></video>
-
     <script>
-        // Define a flag to track whether the pauseVideo function has been executed
-        let pauseVideoExecuted = false;
+    // Define a flag to track whether the pauseVideo function has been executed
+    let pauseVideoExecuted = false;
 
-        function pauseVideo(videoId) {
-            if (!pauseVideoExecuted) {
-                const videoElement = document.getElementById(videoId);
+    function pauseVideo() {
+        if (!pauseVideoExecuted) {
+            const tranVideo = document.getElementById('tranVideo');
+            tranVideo.pause();
+            console.log('tranVideo paused successfully');
+            pauseVideoExecuted = true;
+        }
+    }
+
+    // Attach the event listener using JavaScript
+    document.getElementById('tranVideo').addEventListener('play', pauseVideo);
+    </script>
+
+    <video id="video1" src="wwwroot/videos/SW1.mp4" playsinline></video>
+    <script>
+        let pauseVideoExecuted_video1 = false;
+
+        function pauseVideo_video1() {
+            if (!pauseVideoExecuted_video1) {
+                const videoElement = document.getElementById('video1');
                 if (videoElement) {
                     videoElement.pause();
-                    console.log(`${videoId} paused successfully`);
-                    pauseVideoExecuted = true;
+                    console.log('video1 paused successfully');
+                    pauseVideoExecuted_video1 = true;
                 }
             }
         }
 
-        // Attach the event listener using JavaScript for tranVideo
-        document.getElementById('tranVideo').addEventListener('play', function () {
-            pauseVideo('tranVideo');
-        });
+        document.getElementById('video1').addEventListener('play', pauseVideo_video1);
+    </script>
 
-        // Other videos with their respective IDs
-        const videoIds = ['video1', 'video2', 'video3', 'video4', 'video5', 'video6'];
+    <video id="video2" src="wwwroot/videos/SW2.mp4" playsinline></video>
+    <script>
+        let pauseVideoExecuted_video2 = false;
 
-        videoIds.forEach(function (videoId) {
-            const videoElement = document.getElementById(videoId);
-
-            if (videoElement) {
-                // Add oncanplay event listener for each video
-                videoElement.addEventListener('canplay', function () {
-                    if (!pauseVideoExecuted) {
-                        pauseVideo(videoId);
-                        pauseVideoExecuted = true;
-                    }
-                });
+        function pauseVideo_video2() {
+            if (!pauseVideoExecuted_video2) {
+                const videoElement = document.getElementById('video2');
+                if (videoElement) {
+                    videoElement.pause();
+                    console.log('video2 paused successfully');
+                    pauseVideoExecuted_video2 = true;
+                }
             }
-        });
+        }
+
+        document.getElementById('video2').addEventListener('play', pauseVideo_video2);
+    </script>
+
+    <video id="video3" src="wwwroot/videos/SW3.mp4" playsinline></video>
+    <script>
+        let pauseVideoExecuted_video3 = false;
+
+        function pauseVideo_video3() {
+            if (!pauseVideoExecuted_video3) {
+                const videoElement = document.getElementById('video3');
+                if (videoElement) {
+                    videoElement.pause();
+                    console.log('video3 paused successfully');
+                    pauseVideoExecuted_video3 = true;
+                }
+            }
+        }
+
+        document.getElementById('video3').addEventListener('play', pauseVideo_video3);
+    </script>
+
+    <video id="video4" src="wwwroot/videos/SW4.mp4" playsinline></video>
+    <script>
+        let pauseVideoExecuted_video4 = false;
+
+        function pauseVideo_video4() {
+            if (!pauseVideoExecuted_video4) {
+                const videoElement = document.getElementById('video4');
+                if (videoElement) {
+                    videoElement.pause();
+                    console.log('video4 paused successfully');
+                    pauseVideoExecuted_video4 = true;
+                }
+            }
+        }
+
+        document.getElementById('video4').addEventListener('play', pauseVideo_video4);
+    </script>
+
+    <video id="video5" src="wwwroot/videos/SW5.mp4" playsinline></video>
+    <script>
+        let pauseVideoExecuted_video5 = false;
+
+        function pauseVideo_video5() {
+            if (!pauseVideoExecuted_video5) {
+                const videoElement = document.getElementById('video5');
+                if (videoElement) {
+                    videoElement.pause();
+                    console.log('video5 paused successfully');
+                    pauseVideoExecuted_video5 = true;
+                }
+            }
+        }
+
+        document.getElementById('video5').addEventListener('play', pauseVideo_video5);
+    </script>
+
+    <video id="video6" src="wwwroot/videos/SW6.mp4" playsinline></video>
+    <script>
+        let pauseVideoExecuted_video6 = false;
+
+        function pauseVideo_video6() {
+            if (!pauseVideoExecuted_video6) {
+                const videoElement = document.getElementById('video6');
+                if (videoElement) {
+                    videoElement.pause();
+                    console.log('video6 paused successfully');
+                    pauseVideoExecuted_video6 = true;
+                }
+            }
+        }
+
+        document.getElementById('video6').addEventListener('play', pauseVideo_video6);
     </script>
 
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
@@ -92,6 +170,14 @@
         // Define assets to preload
         const assetsToLoad = [
             { id: "loadingBar", src: "wwwroot/assets/CowboyHead.gif" },
+            { id: "tranVideo", src: "wwwroot/assets/TranVid.mov" },
+            { id: "tranAudio", src: "wwwroot/assets/tranAudio.m4a" },
+            { id: "video1", src: "wwwroot/videos/SW1.mp4" },
+            { id: "video2", src: "wwwroot/videos/SW2.mp4" },
+            { id: "video3", src: "wwwroot/videos/SW3.mp4" },
+            { id: "video4", src: "wwwroot/videos/SW4.mp4" },
+            { id: "video5", src: "wwwroot/videos/SW5.mp4" },
+            { id: "video6", src: "wwwroot/videos/SW6.mp4" },
             // Add more assets as needed
         ];
 
