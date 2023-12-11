@@ -26,21 +26,51 @@
     <div id="videoPlayerContainer"></div>
     
     <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay></video>
+
+    <!-- Other videos with their respective IDs -->
+    <video id="video1" src="wwwroot/videos/SW1.mp4" playsinline></video>
+    <video id="video2" src="wwwroot/videos/SW2.mp4" playsinline></video>
+    <video id="video3" src="wwwroot/videos/SW3.mp4" playsinline></video>
+    <video id="video4" src="wwwroot/videos/SW4.mp4" playsinline></video>
+    <video id="video5" src="wwwroot/videos/SW5.mp4" playsinline></video>
+    <video id="video6" src="wwwroot/videos/SW6.mp4" playsinline></video>
+
     <script>
         // Define a flag to track whether the pauseVideo function has been executed
         let pauseVideoExecuted = false;
 
-        function pauseVideo() {
+        function pauseVideo(videoId) {
             if (!pauseVideoExecuted) {
-                const tranVideo = document.getElementById('tranVideo');
-                tranVideo.pause();
-                console.log('tranVideo paused successfully');
-                pauseVideoExecuted = true;
+                const videoElement = document.getElementById(videoId);
+                if (videoElement) {
+                    videoElement.pause();
+                    console.log(`${videoId} paused successfully`);
+                    pauseVideoExecuted = true;
+                }
             }
         }
 
-        // Attach the event listener using JavaScript
-        document.getElementById('tranVideo').addEventListener('play', pauseVideo);
+        // Attach the event listener using JavaScript for tranVideo
+        document.getElementById('tranVideo').addEventListener('play', function () {
+            pauseVideo('tranVideo');
+        });
+
+        // Other videos with their respective IDs
+        const videoIds = ['video1', 'video2', 'video3', 'video4', 'video5', 'video6'];
+
+        videoIds.forEach(function (videoId) {
+            const videoElement = document.getElementById(videoId);
+
+            if (videoElement) {
+                // Add oncanplay event listener for each video
+                videoElement.addEventListener('canplay', function () {
+                    if (!pauseVideoExecuted) {
+                        pauseVideo(videoId);
+                        pauseVideoExecuted = true;
+                    }
+                });
+            }
+        });
     </script>
 
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
@@ -62,14 +92,6 @@
         // Define assets to preload
         const assetsToLoad = [
             { id: "loadingBar", src: "wwwroot/assets/CowboyHead.gif" },
-            { id: "tranVideo", src: "wwwroot/assets/TranVid.mov" },
-            { id: "tranAudio", src: "wwwroot/assets/tranAudio.m4a" },
-            { id: "video1", src: "wwwroot/videos/SW1.mp4" },
-            { id: "video2", src: "wwwroot/videos/SW2.mp4" },
-            { id: "video3", src: "wwwroot/videos/SW3.mp4" },
-            { id: "video4", src: "wwwroot/videos/SW4.mp4" },
-            { id: "video5", src: "wwwroot/videos/SW5.mp4" },
-            { id: "video6", src: "wwwroot/videos/SW6.mp4" },
             // Add more assets as needed
         ];
 
@@ -82,18 +104,6 @@
 
             // Change loading text to "Click" when the game starts
             document.getElementById("loadingText").textContent = "Click";
-        });
-
-        // Pause all videos except tranVideo
-        const videosToPause = ['video1', 'video2', 'video3', 'video4', 'video5', 'video6'];
-
-        videosToPause.forEach(function (videoId) {
-            const videoElement = document.getElementById(videoId);
-            
-            if (videoElement) {
-                videoElement.pause();
-                console.log(`${videoId} paused successfully`);
-            }
         });
     </script>
 </body>
