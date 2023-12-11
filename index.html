@@ -26,6 +26,22 @@
     <div id="videoPlayerContainer"></div>
     
     <video id="tranVideo" src="wwwroot/assets/TranVid.mov" playsinline autoplay></video>
+    <script>
+    // Define a flag to track whether the pauseVideo function has been executed
+    let pauseVideoExecuted = false;
+
+    function pauseVideo() {
+        if (!pauseVideoExecuted) {
+            const tranVideo = document.getElementById('tranVideo');
+            tranVideo.pause();
+            console.log('tranVideo paused successfully');
+            pauseVideoExecuted = true;
+        }
+    }
+
+    // Attach the event listener using JavaScript
+    document.getElementById('tranVideo').addEventListener('play', pauseVideo);
+    </script>
 
     <audio id="tranAudio" src="wwwroot/assets/tranAudio.m4a"></audio>
     
@@ -66,25 +82,6 @@
 
             // Change loading text to "Click" when the game starts
             document.getElementById("loadingText").textContent = "Click";
-
-            // Play and pause tranVideo
-            const tranVideo = document.getElementById('tranVideo');
-            setTimeout(() => {
-                tranVideo.play().then(() => tranVideo.pause());
-                console.log('tranVideo played and paused successfully');
-            }, 1000); // Adjust the delay as needed
-
-            // Play and pause other videos
-            const videoIds = ['video1', 'video2', 'video3', 'video4', 'video5', 'video6'];
-            videoIds.forEach(function (videoId) {
-                const videoElement = document.getElementById(videoId);
-                if (videoElement) {
-                    setTimeout(() => {
-                        videoElement.play().then(() => videoElement.pause());
-                        console.log(`${videoId} played and paused successfully`);
-                    }, 1000); // Adjust the delay as needed
-                }
-            });
         });
     </script>
 </body>
