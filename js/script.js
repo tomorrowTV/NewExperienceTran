@@ -58,18 +58,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (currentVideo) {
             currentVideo.addEventListener('ended', function () {
-                // Remove fade-out class after the video has ended
-                currentVideo.classList.remove('fade-out');
+                videoPlayerContainer.classList.remove('fade-in');
+                videoPlayerContainer.classList.add('fade-out');
+                currentVideo.currentTime = 0;
+                currentVideo.play();
             });
 
             // Add fade-out class to current video
-            currentVideo.classList.add('fade-out');
+            videoPlayerContainer.classList.add('fade-out');
         }
 
         videoPlayerContainer.innerHTML = '';
-        newVideo.classList.add('fade-in');
-
-        videoPlayerContainer.appendChild(newVideo);
+        videoPlayerContainer.classList.remove('fade-out');
+        videoPlayerContainer.classList.add('fade-in');
 
         newVideo.setAttribute('playsinline', '');
         newVideo.currentTime = audioStartTime;
@@ -86,12 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         preloadNextVideo();
-
-        // Remove fade-in class after a short delay (adjust as needed)
-        setTimeout(() => {
-            newVideo.classList.remove('fade-in');
-        }, 300);
     }
+
 
     // Function to preload the next video in the array
     function preloadNextVideo() {
