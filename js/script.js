@@ -57,6 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const currentVideo = videoPlayerContainer.querySelector('video');
 
         if (currentVideo) {
+            currentVideo.addEventListener('ended', function () {
+                // Remove fade-out class after the video has ended
+                currentVideo.classList.remove('fade-out');
+            });
+
+            // Add fade-out class to current video
             currentVideo.classList.add('fade-out');
         }
 
@@ -81,9 +87,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         preloadNextVideo();
 
+        // Remove fade-in class after a short delay (adjust as needed)
         setTimeout(() => {
             newVideo.classList.remove('fade-in');
-        }, 100);
+        }, 300);
     }
 
     // Function to preload the next video in the array
