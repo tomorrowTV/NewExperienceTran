@@ -26,17 +26,16 @@ video {
     height: 100%;
     object-fit: contain;
     z-index: 1; /* Lower z-index for videoPlayerContainer */
+    transition: opacity 1s ease-in-out;
 }
 
-#videoPlayerContainer video {
-    opacity: 1;
-    transition: opacity 1s ease-in-out; /* Adjust the duration and easing as needed */
-}
-
-#videoPlayerContainer video.fade-out {
+#videoPlayerContainer.fade-out {
     opacity: 0;
 }
 
+#videoPlayerContainer.fade-in {
+    opacity: 1;
+}
 /* Additional styles for other elements if needed */
 body {
     background-color: black;
